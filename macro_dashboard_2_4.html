@@ -330,7 +330,7 @@ async function fetchGoldApi(){
 async function fetchCrypto(){try{return await(await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,solana,ripple,cardano,dogecoin&order=market_cap_desc&per_page=7&sparkline=false&price_change_percentage=24h',{signal:AbortSignal.timeout(9000)})).json();}catch(e){return null;}}
 
 // 4) FRANKFURTER
-async function fetchForex(){try{const j=await(await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,JPY,CHF,AUD,CAD',{signal:AbortSignal.timeout(8000)})).json();return j.rates||{};}catch(e){return{};}}
+async function fetchForex(){try{const j=await(await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,JPY,CHF,AUD,CAD,RUB,CNY',{signal:AbortSignal.timeout(8000)})).json();return j.rates||{};}catch(e){return{};}}
 
 // 5) FEAR & GREED
 async function fetchFG(){try{const j=await(await fetch('https://api.alternative.me/fng/?limit=1',{signal:AbortSignal.timeout(8000)})).json();if(j?.data?.[0])return{value:parseInt(j.data[0].value),label:j.data[0].value_classification.toUpperCase()};return null;}catch(e){return null;}}
@@ -358,8 +358,10 @@ const STOCKS=[
   {sym:'SPY',n:'S&P 500',d:'SPY ETF'},{sym:'QQQ',n:'NASDAQ 100',d:'QQQ ETF'},
   {sym:'DIA',n:'DOW JONES',d:'DIA ETF'},{sym:'IWM',n:'RUSSELL 2000',d:'IWM ETF'},
   {sym:'XOM',n:'EXXON',d:'ExxonMobil'},
+  {sym:'EWI',n:'MILAN FTSE MIB',d:'Italy (EWI)'},{sym:'EWQ',n:'CAC 40 PARIS',d:'France (EWQ)'},
+  {sym:'EWG',n:'DAX GERMANY',d:'Germany (EWG)'},
   {sym:'EFA',n:'INTL DEVELOPED',d:'EFA ETF'},{sym:'EEM',n:'EMERGING MKT',d:'EEM ETF'},
-  {sym:'VGK',n:'EUROPE',d:'VGK ETF'},{sym:'EWJ',n:'JAPAN',d:'EWJ ETF'},
+  {sym:'EWJ',n:'JAPAN NIKKEI',d:'Japan (EWJ)'},
 ];
 const COMMS_METALS=[
   {sym:'XAU',n:'GOLD',d:'XAU/USD oz',e:'🥇'},{sym:'XAG',n:'SILVER',d:'XAG/USD oz',e:'🥈'},
@@ -412,16 +414,19 @@ function renderFutures(data){
   }).join('');
 }
 
-function makeRow(n,d,e,price,chg,pfx='$',dec=2){
+function makeRow(n,d,e,price,chg,pfx='$',dec=2,sym=''){
   const p=price!=null?`${pfx}${fmt(price,dec)}`:'—';const c=ci(chg);
   const sp=price!=null?`<div class="spk">${sparkHTML(chg>=0)}</div>`:'<div class="spk"></div>';
-  return`<div class="ar"><div class="al"><div class="an">${e||''}${n}</div><div class="ad">${d}</div></div><div class="aprx">${p}</div><div class="abadge ${c.c}">${c.t}</div>${sp}</div>`;
+  const link=sym?`https://www.tradingview.com/symbols/${sym}/`:'';
+  const openTag=sym?`<a href="${link}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px">`:'';
+  const closeTag=sym?'</a>':'';
+  return`<div class="ar" ${sym?'style="cursor:pointer"':''}>${openTag}<div class="al"><div class="an">${e||''}${n}</div><div class="ad">${d}</div></div><div class="aprx">${p}</div><div class="abadge ${c.c}">${c.t}</div>${sp}${closeTag}</div>`;
 }
 
 function renderStocks(data){
   if(!FINNHUB_KEY){document.getElementById('stocks').innerHTML='<div class="err-msg">⚠ Enter Finnhub API key to load stocks</div>';return;}
   if(!STOCKS.some(s=>data[s.sym])){document.getElementById('stocks').innerHTML='<div class="err-msg">⚠ No stock data — check API key or refresh</div>';return;}
-  document.getElementById('stocks').innerHTML=STOCKS.map(s=>{const d=data[s.sym];if(d)tkBuf.push({sym:s.n,price:`$${fmt(d.price)}`,chg:d.chg});return makeRow(s.n,s.d,'',d?.price,d?.chg);}).join('');
+  document.getElementById('stocks').innerHTML=STOCKS.map(s=>{const d=data[s.sym];if(d)tkBuf.push({sym:s.n,price:`$${fmt(d.price)}`,chg:d.chg});return makeRow(s.n,s.d,'',d?.price,d?.chg,'$',2,s.sym);}).join('');
 }
 
 function renderComms(metalData,etfData){
@@ -443,7 +448,7 @@ function renderCrypto(coins){
 }
 
 function renderForex(rates){
-  const P=[{k:'EUR',inv:1,n:'EUR/USD',d:'Euro / Dollar'},{k:'GBP',inv:1,n:'GBP/USD',d:'Pound / Dollar'},{k:'JPY',inv:0,n:'USD/JPY',d:'Dollar / Yen'},{k:'CHF',inv:0,n:'USD/CHF',d:'Dollar / Franc'},{k:'AUD',inv:1,n:'AUD/USD',d:'Aussie / Dollar'},{k:'CAD',inv:0,n:'USD/CAD',d:'Dollar / Loonie'}];
+  const P=[{k:'EUR',inv:1,n:'EUR/USD',d:'Euro / Dollar'},{k:'GBP',inv:1,n:'GBP/USD',d:'Pound / Dollar'},{k:'JPY',inv:0,n:'USD/JPY',d:'Dollar / Yen'},{k:'CHF',inv:0,n:'USD/CHF',d:'Dollar / Franc'},{k:'RUB',inv:0,n:'USD/RUB',d:'Dollar / Ruble'},{k:'CNY',inv:0,n:'USD/CNY',d:'Dollar / Yuan'},{k:'AUD',inv:1,n:'AUD/USD',d:'Aussie / Dollar'},{k:'CAD',inv:0,n:'USD/CAD',d:'Dollar / Loonie'}];
   if(!rates||!Object.keys(rates).length){document.getElementById('forex').innerHTML='<div class="err-msg">⚠ Forex unavailable</div>';return;}
   document.getElementById('forex').innerHTML=P.map(p=>{const raw=rates[p.k];if(!raw)return'';const price=p.inv?+(1/raw).toFixed(4):+raw.toFixed(4);const chg=(Math.random()-0.49)*0.8;const c=ci(chg);tkBuf.push({sym:p.n,price:price.toFixed(4),chg});
   return`<div class="ar"><div class="al"><div class="an">${p.n}</div><div class="ad">${p.d}</div></div><div class="aprx">${price.toFixed(4)}</div><div class="abadge ${c.c}">${c.t}</div><div class="spk">${sparkHTML(chg>=0)}</div></div>`;}).join('');
