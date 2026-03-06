@@ -126,16 +126,31 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .fgends{width:88%;display:flex;justify-content:space-between;font-size:11px;}
 
 /* ═══ NEWS PANEL ═══ */
-.news-list{max-height:420px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
-.news-item{padding:14px 18px;border-bottom:1px solid rgba(26,43,60,.6);cursor:pointer;transition:background .15s;}
+.news-tabs{display:flex;overflow-x:hidden;gap:0;border-bottom:1px solid var(--border);background:var(--bg2);}
+.ntab{flex:1 1 0;padding:8px 6px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.8px;color:var(--text2);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;text-transform:uppercase;white-space:nowrap;text-align:center;overflow:hidden;text-overflow:ellipsis;}
+.ntab:hover{color:var(--text);background:rgba(0,212,255,.04);}
+.ntab.active{color:var(--accent);border-bottom:2px solid var(--accent);background:rgba(0,212,255,.06);}
+.news-list{max-height:380px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
+.news-item{padding:13px 18px;border-bottom:1px solid rgba(26,43,60,.6);cursor:pointer;transition:background .15s;}
 .news-item:hover{background:rgba(0,212,255,.04);}
 .news-item:last-child{border-bottom:none;}
 .news-hl{font-size:13px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:5px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
 .news-meta{display:flex;align-items:center;gap:10px;font-size:10px;color:var(--text3);}
 .news-src{color:var(--accent);font-weight:700;letter-spacing:1px;text-transform:uppercase;}
 .news-time{color:var(--text3);}
-.news-cat{padding:1px 6px;border-radius:2px;background:rgba(255,208,0,.08);color:var(--yellow);font-size:9px;letter-spacing:1px;}
+.news-cat{padding:1px 6px;border-radius:2px;font-size:9px;letter-spacing:1px;font-weight:700;}
+.news-cat.markets{background:rgba(0,212,255,.1);color:var(--accent);}
+.news-cat.economics{background:rgba(255,208,0,.1);color:var(--yellow);}
+.news-cat.politics{background:rgba(179,136,255,.1);color:var(--purple);}
+.news-cat.technology{background:rgba(0,230,118,.1);color:var(--green);}
+.news-cat.wealth{background:rgba(255,140,0,.1);color:var(--orange);}
+.news-cat.business{background:rgba(0,212,255,.07);color:var(--accent);}
+.news-cat.green{background:rgba(0,230,118,.1);color:var(--green);}
+.news-cat.opinion{background:rgba(179,136,255,.1);color:var(--purple);}
+.news-cat.industries{background:rgba(255,208,0,.1);color:var(--yellow);}
 .news-item a{text-decoration:none;color:inherit;}
+.news-loading{color:var(--text2);font-size:11px;padding:18px;text-align:center;letter-spacing:2px;}
+.news-feed-err{color:var(--orange);font-size:10px;padding:12px 18px;display:flex;align-items:center;gap:8px;}
 
 /* ── STATUS ── */
 .sbar{background:var(--bg2);border-top:1px solid var(--border);padding:8px 24px;display:flex;justify-content:space-between;font-size:10px;color:var(--text3);letter-spacing:.8px;}
@@ -201,8 +216,19 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 
   <!-- TOP NEWS -->
   <div class="pnl c2">
-    <div class="ph"><span class="pt">📰 Top News</span><span class="pb">FINNHUB MARKET NEWS</span></div>
-    <div class="news-list" id="news"><div class="ar"><div class="ldph" style="width:100%"></div></div></div>
+    <div class="ph"><span class="pt">📰 Bloomberg News</span><span class="pb">RSS LIVE FEEDS</span></div>
+    <div class="news-tabs" id="newsTabs">
+      <button class="ntab active" data-feed="markets" onclick="switchNewsFeed('markets',this)">📈 Markets</button>
+      <button class="ntab" data-feed="economics" onclick="switchNewsFeed('economics',this)">🏦 Economics</button>
+      <button class="ntab" data-feed="politics" onclick="switchNewsFeed('politics',this)">🏛 Politics</button>
+      <button class="ntab" data-feed="technology" onclick="switchNewsFeed('technology',this)">💻 Technology</button>
+      <button class="ntab" data-feed="wealth" onclick="switchNewsFeed('wealth',this)">💰 Wealth</button>
+      <button class="ntab" data-feed="business" onclick="switchNewsFeed('business',this)">🏢 Business</button>
+      <button class="ntab" data-feed="green" onclick="switchNewsFeed('green',this)">🌱 Green</button>
+      <button class="ntab" data-feed="opinion" onclick="switchNewsFeed('opinion',this)">💬 Opinion</button>
+      <button class="ntab" data-feed="industries" onclick="switchNewsFeed('industries',this)">🏭 Industries</button>
+    </div>
+    <div class="news-list" id="news"><div class="news-loading">⟳ LOADING BLOOMBERG FEED...</div></div>
   </div>
 
   <!-- FOREX -->
@@ -335,11 +361,169 @@ async function fetchForex(){try{const j=await(await fetch('https://api.frankfurt
 // 5) FEAR & GREED
 async function fetchFG(){try{const j=await(await fetch('https://api.alternative.me/fng/?limit=1',{signal:AbortSignal.timeout(8000)})).json();if(j?.data?.[0])return{value:parseInt(j.data[0].value),label:j.data[0].value_classification.toUpperCase()};return null;}catch(e){return null;}}
 
-// 6) FINNHUB MARKET NEWS
+// 6) FINNHUB MARKET NEWS (kept for fallback / other uses)
 async function fetchNews(){
   if(!FINNHUB_KEY)return null;
   try{const r=await fetch(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(8000)});
   if(!r.ok)return null;return await r.json();}catch(e){return null;}}
+
+// ═══════════════════════════════════════════════════════════════
+// BLOOMBERG RSS FEEDS
+// ═══════════════════════════════════════════════════════════════
+const BLOOMBERG_FEEDS={
+  markets:   {url:'https://feeds.bloomberg.com/markets/news.rss',   label:'Markets',    cls:'markets'},
+  economics: {url:'https://feeds.bloomberg.com/economics/news.rss', label:'Economics',  cls:'economics'},
+  politics:  {url:'https://feeds.bloomberg.com/politics/news.rss',  label:'Politics',   cls:'politics'},
+  technology:{url:'https://feeds.bloomberg.com/technology/news.rss',label:'Technology', cls:'technology'},
+  wealth:    {url:'https://feeds.bloomberg.com/wealth/news.rss',    label:'Wealth',     cls:'wealth'},
+  business:  {url:'https://feeds.bloomberg.com/business/news.rss',  label:'Business',   cls:'business'},
+  green:     {url:'https://feeds.bloomberg.com/green/news.rss',     label:'Green',      cls:'green'},
+  opinion:   {url:'https://feeds.bloomberg.com/bview/news.rss',     label:'Opinion',    cls:'opinion'},
+  industries:{url:'https://feeds.bloomberg.com/industries/news.rss',label:'Industries', cls:'industries'},
+};
+
+// RSS cache
+const rssCache={};
+let activeNewsFeed='markets';
+
+async function fetchBloombergFeed(feedKey){
+  if(rssCache[feedKey]&&(Date.now()-rssCache[feedKey].ts)<5*60*1000)return rssCache[feedKey].items;
+  const feed=BLOOMBERG_FEEDS[feedKey];
+  if(!feed)return null;
+
+  // Strategy 1: rss2json.com — free JSON API, handles CORS natively
+  try{
+    const r=await fetch(
+      `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&api_key=&count=25`,
+      {signal:AbortSignal.timeout(12000)}
+    );
+    if(r.ok){
+      const j=await r.json();
+      if(j.status==='ok'&&j.items&&j.items.length){
+        const items=j.items.map(i=>({
+          headline:(i.title||'').replace(/<[^>]+>/g,'').trim(),
+          url:i.link||i.guid||'#',
+          datetime:i.pubDate?new Date(i.pubDate).getTime()/1000:0,
+          source:'Bloomberg',
+          category:feed.label,
+          cls:feed.cls,
+          description:(i.description||'').replace(/<[^>]+>/g,'').trim().slice(0,200),
+        })).filter(i=>i.headline);
+        if(items.length){rssCache[feedKey]={items,ts:Date.now()};return items;}
+      }
+    }
+  }catch(e){}
+
+  // Strategy 2: allorigins proxy → parse XML manually
+  try{
+    const r=await fetch(
+      `https://api.allorigins.win/get?url=${encodeURIComponent(feed.url)}`,
+      {signal:AbortSignal.timeout(12000)}
+    );
+    if(r.ok){
+      const j=await r.json();
+      const text=j.contents||'';
+      if(text){
+        const items=parseRSS(text,feed.label,feed.cls);
+        if(items&&items.length){rssCache[feedKey]={items,ts:Date.now()};return items;}
+      }
+    }
+  }catch(e){}
+
+  // Strategy 3: corsproxy.io
+  try{
+    const r=await fetch(
+      `https://corsproxy.io/?${encodeURIComponent(feed.url)}`,
+      {signal:AbortSignal.timeout(12000)}
+    );
+    if(r.ok){
+      const text=await r.text();
+      const items=parseRSS(text,feed.label,feed.cls);
+      if(items&&items.length){rssCache[feedKey]={items,ts:Date.now()};return items;}
+    }
+  }catch(e){}
+
+  // Strategy 4: feedparse.vercel.app (another free RSS proxy)
+  try{
+    const r=await fetch(
+      `https://feedparse.vercel.app/api/parse?url=${encodeURIComponent(feed.url)}`,
+      {signal:AbortSignal.timeout(12000)}
+    );
+    if(r.ok){
+      const j=await r.json();
+      const entries=j.items||j.entries||[];
+      if(entries.length){
+        const items=entries.map(i=>({
+          headline:(i.title||'').replace(/<[^>]+>/g,'').trim(),
+          url:i.link||i.url||'#',
+          datetime:i.published||i.pubDate?new Date(i.published||i.pubDate).getTime()/1000:0,
+          source:'Bloomberg',category:feed.label,cls:feed.cls,
+        })).filter(i=>i.headline);
+        if(items.length){rssCache[feedKey]={items,ts:Date.now()};return items;}
+      }
+    }
+  }catch(e){}
+
+  return null;
+}
+
+function parseRSS(xml,label,cls){
+  try{
+    const parser=new DOMParser();
+    const doc=parser.parseFromString(xml,'application/xml')||parser.parseFromString(xml,'text/xml');
+    const items=[...doc.querySelectorAll('item')];
+    if(!items.length)return null;
+    return items.slice(0,20).map(item=>{
+      const title=item.querySelector('title')?.textContent||'';
+      const link=item.querySelector('link')?.textContent||item.querySelector('link')?.getAttribute('href')||'#';
+      const pubDate=item.querySelector('pubDate')?.textContent||'';
+      const desc=item.querySelector('description')?.textContent||'';
+      // Clean CDATA / HTML from title
+      const cleanTitle=title.replace(/<!\[CDATA\[|\]\]>/g,'').replace(/<[^>]+>/g,'').trim();
+      const cleanDesc=desc.replace(/<!\[CDATA\[|\]\]>/g,'').replace(/<[^>]+>/g,'').trim().slice(0,180);
+      const ts=pubDate?new Date(pubDate).getTime()/1000:0;
+      return{headline:cleanTitle,url:link.trim(),datetime:ts,source:'Bloomberg',category:label,cls};
+    }).filter(i=>i.headline);
+  }catch(e){return null;}
+}
+
+function renderNews(articles, feedKey){
+  const feed=BLOOMBERG_FEEDS[feedKey||activeNewsFeed]||BLOOMBERG_FEEDS.markets;
+  const el=document.getElementById('news');
+  if(!articles||!articles.length){
+    el.innerHTML=`<div class="news-feed-err">⚠ Bloomberg ${feed.label} feed could not load.
+      &nbsp;<button onclick="switchNewsFeed('${feedKey||activeNewsFeed}',document.querySelector('.ntab.active'))" style="background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:3px 10px;cursor:pointer;border-radius:3px;letter-spacing:1px;margin-left:8px">⟳ RETRY</button>
+    </div>`;
+    return;
+  }
+  el.innerHTML=articles.slice(0,20).map(a=>{
+    const ts=a.datetime&&a.datetime>1000?timeAgo(a.datetime):'';
+    return`<div class="news-item"><a href="${a.url||'#'}" target="_blank" rel="noopener">
+      <div class="news-hl">${a.headline||'Untitled'}</div>
+      <div class="news-meta">
+        <span class="news-src">Bloomberg</span>
+        <span class="news-time">${ts}</span>
+        <span class="news-cat ${a.cls||feed.cls}">${a.category||feed.label}</span>
+      </div>
+    </a></div>`;
+  }).join('');
+}
+
+async function switchNewsFeed(feedKey, btn){
+  activeNewsFeed=feedKey;
+  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
+  // Re-find the correct tab button by data-feed if btn not passed
+  const activeBtn=btn||document.querySelector(`.ntab[data-feed="${feedKey}"]`);
+  if(activeBtn)activeBtn.classList.add('active');
+  document.getElementById('news').innerHTML=`<div class="news-loading"><span class="spin" style="display:inline-block;animation:rot 1s linear infinite">⟳</span> FETCHING BLOOMBERG ${(BLOOMBERG_FEEDS[feedKey]?.label||feedKey).toUpperCase()} FEED...</div>`;
+  const items=await fetchBloombergFeed(feedKey);
+  renderNews(items,feedKey);
+}
+
+async function loadInitialNews(){
+  const items=await fetchBloombergFeed('markets');
+  renderNews(items,'markets');
+}
 
 // ═══════════════════════════════════════════════════════════════
 // DEFINITIONS
@@ -504,13 +688,12 @@ async function refreshAll(){
   [...FUTURES,...STOCKS,...COMMS_ETFS,...BOND_DEFS,...SECTOR_ETFS].forEach(s=>finnSymSet.add(s.sym));
   const finnSyms=[...finnSymSet];
 
-  const[finnData,metalData,cryptoData,fxRates,fgData,newsData]=await Promise.all([
+  const[finnData,metalData,cryptoData,fxRates,fgData]=await Promise.all([
     FINNHUB_KEY?fetchFinnhubBatch(finnSyms):Promise.resolve({}),
     fetchGoldApi(),
     fetchCrypto(),
     fetchForex(),
     fetchFG(),
-    fetchNews(),
   ]);
 
   // Gold spot in macro bar
@@ -524,7 +707,6 @@ async function refreshAll(){
   renderForex(fxRates);
   renderHeatmap(finnData);
   renderFG(fgData);
-  renderNews(newsData);
   buildTicker();
 
   document.getElementById('lastUp').textContent='⏱ '+new Date().toLocaleTimeString()+' local';
@@ -534,6 +716,7 @@ async function refreshAll(){
 
 setInterval(refreshAll,60000);
 refreshAll();
+loadInitialNews();
 </script>
 </body>
 </html>
