@@ -632,7 +632,8 @@ function renderCrypto(coins){
 }
 
 function renderForex(rates){
-  const P=[{k:'EUR',inv:1,n:'EUR/USD',d:'Euro / Dollar'},{k:'GBP',inv:1,n:'GBP/USD',d:'Pound / Dollar'},{k:'JPY',inv:0,n:'USD/JPY',d:'Dollar / Yen'},{k:'CHF',inv:0,n:'USD/CHF',d:'Dollar / Franc'},{k:'RUB',inv:0,n:'USD/RUB',d:'Dollar / Ruble'},{k:'CNY',inv:0,n:'USD/CNY',d:'Dollar / Yuan'},{k:'AUD',inv:1,n:'AUD/USD',d:'Aussie / Dollar'},{k:'CAD',inv:0,n:'USD/CAD',d:'Dollar / Loonie'}];
+  if(rates['RUB']&&rates['EUR']) rates['EURRUB']=+(rates['RUB']/rates['EUR']).toFixed(2);
+  const P=[{k:'EUR',inv:1,n:'EUR/USD',d:'Euro / Dollar'},{k:'GBP',inv:1,n:'GBP/USD',d:'Pound / Dollar'},{k:'JPY',inv:0,n:'USD/JPY',d:'Dollar / Yen'},{k:'CHF',inv:0,n:'USD/CHF',d:'Dollar / Franc'},{k:'RUB',inv:0,n:'USD/RUB',d:'Dollar / Russian Ruble'},{k:'EURRUB',inv:0,n:'EUR/RUB',d:'Euro / Russian Ruble'},{k:'CNY',inv:0,n:'USD/CNY',d:'Dollar / Yuan'},{k:'AUD',inv:1,n:'AUD/USD',d:'Aussie / Dollar'},{k:'CAD',inv:0,n:'USD/CAD',d:'Dollar / Loonie'}];
   if(!rates||!Object.keys(rates).length){document.getElementById('forex').innerHTML='<div class="err-msg">⚠ Forex unavailable</div>';return;}
   document.getElementById('forex').innerHTML=P.map(p=>{const raw=rates[p.k];if(!raw)return'';const price=p.inv?+(1/raw).toFixed(4):+raw.toFixed(4);const chg=(Math.random()-0.49)*0.8;const c=ci(chg);tkBuf.push({sym:p.n,price:price.toFixed(4),chg});
   return`<div class="ar"><div class="al"><div class="an">${p.n}</div><div class="ad">${p.d}</div></div><div class="aprx">${price.toFixed(4)}</div><div class="abadge ${c.c}">${c.t}</div><div class="spk">${sparkHTML(chg>=0)}</div></div>`;}).join('');
