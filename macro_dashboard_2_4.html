@@ -94,7 +94,7 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .ar:last-child{border-bottom:none;}.ar:hover{background:rgba(0,212,255,.03);}
 .al{flex:0 0 auto;width:125px;}
 .an{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.ad{font-size:10px;color:var(--text3);white-space:nowrap;margin-top:1px;}
+.ad{font-size:13px;color:var(--text);white-space:nowrap;margin-top:1px;}
 .aprx{flex:1 1 auto;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;color:var(--text);text-align:right;white-space:nowrap;}
 .abadge{flex:0 0 78px;font-size:11px;font-weight:700;text-align:center;padding:3px 6px;border-radius:3px;white-space:nowrap;}
 .abadge.up{color:var(--green);background:rgba(0,230,118,.09);}
@@ -204,7 +204,7 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 
   <!-- COMMODITIES -->
   <div class="pnl">
-    <div class="ph"><span class="pt">🛢 Commodities & Energy</span><span class="pb">GOLD-API · ETFs · LNG</span></div>
+    <div class="ph"><span class="pt">🛢 Commodities</span><span class="pb">GOLD-API + ETFs</span></div>
     <div id="comms"><div class="ar"><div class="ldph" style="width:100%"></div></div></div>
   </div>
 
@@ -553,18 +553,8 @@ const COMMS_METALS=[
   {sym:'XPD',n:'PALLADIUM',d:'XPD/USD oz',e:'◆'},
 ];
 const COMMS_ETFS=[
-  {sym:'BNO',n:'BRENT CRUDE',d:'ICE Brent (BNO)',e:'🛢',tv:'OANDA:BCOUSD'},
-  {sym:'USO',n:'WTI CRUDE',d:'NYMEX (USO)',e:'⛽',tv:'USO'},
-  {sym:'UNG',n:'HENRY HUB',d:'US Nat Gas (UNG)',e:'🔥',tv:'UNG'},
-  {sym:'WEAT',n:'WHEAT',d:'CBOT (WEAT)',e:'🌾',tv:'WEAT'},{sym:'CORN',n:'CORN',d:'CBOT (CORN)',e:'🌽',tv:'CORN'},
-];
-
-// LNG / Gas benchmarks — static reference prices updated at render time
-// JKM, TTF, Henry Hub, ACER sourced from EIA/ICE estimates; linked to TradingView/EIA
-const LNG_BENCHMARKS=[
-  {n:'JKM',    d:'Asia Spot LNG',       e:'🌏', unit:'$/MMBtu', ref:14.2,  chgEst:0.8,  tv:'NGAS',    link:'https://www.eia.gov/naturalgas/'},
-  {n:'HENRY HUB',d:'US Gas Export',    e:'🇺🇸', unit:'$/MMBtu', ref:null,  chgEst:null, sym:'UNG',    tv:'UNG',     link:'https://www.tradingview.com/symbols/UNG/'},
-  {n:'ACER LNG', d:'EU LNG Index',      e:'🇪🇺', unit:'€/MWh',  ref:41.5,  chgEst:-0.4, tv:'NATGAS',  link:'https://www.acer.europa.eu/gas'},
+  {sym:'USO',n:'CRUDE OIL',d:'WTI (USO)',e:'🛢'},{sym:'UNG',n:'NAT GAS',d:'Henry Hub (UNG)',e:'🔥'},
+  {sym:'WEAT',n:'WHEAT',d:'CBOT (WEAT)',e:'🌾'},{sym:'CORN',n:'CORN',d:'CBOT (CORN)',e:'🌽'},
 ];
 const BOND_DEFS=[
   {sym:'SHV',n:'US SHORT TERM',d:'0-1 Year (SHV)'},{sym:'SHY',n:'US 1-3 YEAR',d:'Treasury (SHY)'},
@@ -608,13 +598,13 @@ function renderFutures(data){
   }).join('');
 }
 
-function makeRow(n,d,e,price,chg,pfx='$',dec=2,sym='',customLink=''){
+function makeRow(n,d,e,price,chg,pfx='$',dec=2,sym=''){
   const p=price!=null?`${pfx}${fmt(price,dec)}`:'—';const c=ci(chg);
   const sp=price!=null?`<div class="spk">${sparkHTML(chg>=0)}</div>`:'<div class="spk"></div>';
-  const link=customLink||(sym?`https://www.tradingview.com/symbols/${sym}/`:'');
-  const openTag=link?`<a href="${link}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px">`:'<div style="display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px">';
-  const closeTag=link?'</a>':'</div>';
-  return`<div class="ar" style="cursor:${link?'pointer':'default'}">${openTag}<div class="al"><div class="an">${e||''}${n}</div><div class="ad">${d}</div></div><div class="aprx">${p}</div><div class="abadge ${c.c}">${c.t}</div>${sp}${closeTag}</div>`;
+  const link=sym?`https://www.tradingview.com/symbols/${sym}/`:'';
+  const openTag=sym?`<a href="${link}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px">`:'';
+  const closeTag=sym?'</a>':'';
+  return`<div class="ar" ${sym?'style="cursor:pointer"':''}>${openTag}<div class="al"><div class="an">${e||''}${n}</div><div class="ad">${d}</div></div><div class="aprx">${p}</div><div class="abadge ${c.c}">${c.t}</div>${sp}${closeTag}</div>`;
 }
 
 function renderStocks(data){
@@ -624,78 +614,28 @@ function renderStocks(data){
 }
 
 function renderComms(metalData,etfData){
-  // Metals — link to TradingView FX/commodity pages
-  const metalLinks={XAU:'https://www.tradingview.com/symbols/XAUUSD/',XAG:'https://www.tradingview.com/symbols/XAGUSD/',HG:'https://www.tradingview.com/symbols/HGUSDT/',XPT:'https://www.tradingview.com/symbols/XPTUSD/',XPD:'https://www.tradingview.com/symbols/XPDUSD/'};
-  let html=COMMS_METALS.map(s=>{const d=metalData[s.sym];if(d)tkBuf.push({sym:s.n,price:`$${fmt(d.price)}`,chg:d.chg});return makeRow(s.n,s.d,s.e,d?.price,d?.chg,'$',2,'',metalLinks[s.sym]||'');}).join('');
-  if(FINNHUB_KEY) html+=COMMS_ETFS.map(s=>{const d=etfData[s.sym];if(d)tkBuf.push({sym:s.n,price:`$${fmt(d.price)}`,chg:d.chg});return makeRow(s.n,s.d,s.e,d?.price,d?.chg,'$',2,s.sym);}).join('');
-
-  // ── LNG / GAS BENCHMARKS HEADER ──
-  html+=`<div style="padding:8px 18px 4px;font-size:9px;letter-spacing:2px;color:var(--text3);border-top:1px solid var(--border);background:var(--bg2)">⛽ LNG &amp; GAS BENCHMARKS</div>`;
-
-  // JKM — static reference, link EIA
-  const jkm=LNG_BENCHMARKS[0];
-  html+=makeRow(jkm.n,jkm.d,jkm.e,jkm.ref,jkm.chgEst,'$',2,'',jkm.link);
-
-  // Henry Hub — use live UNG ETF price if available, otherwise ref
-  const hhDef=LNG_BENCHMARKS[1];
-  const hhLive=etfData['UNG'];
-  const hhPrice=hhLive?.price??null;
-  const hhChg=hhLive?.chg??hhDef.chgEst;
-  if(hhLive)tkBuf.push({sym:'HENRY HUB',price:`$${fmt(hhPrice)}`,chg:hhChg});
-  html+=makeRow(hhDef.n,hhDef.d,hhDef.e,hhPrice,hhChg,'$',2,'',hhDef.link);
-
-  // ACER LNG — static reference
-  const acer=LNG_BENCHMARKS[2];
-  html+=makeRow(acer.n,acer.d,acer.e,acer.ref,acer.chgEst,'€',2,'',acer.link);
-
-  // ── TTF CHART — built-in canvas chart using free price data ──
-  html+=`<div style="border-top:1px solid var(--border)" id="ttf-section">
-    <div style="padding:8px 18px 4px;font-size:9px;letter-spacing:2px;color:var(--text3);background:var(--bg2);display:flex;justify-content:space-between;align-items:center">
-      <span id="ttf-chart-label">🔵 TTF EUROPE GAS — EUR/MWh · 30D</span>
-      <div style="display:flex;gap:10px;align-items:center">
-        <span id="ttf-live-price" style="font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;color:var(--text)">—</span>
-        <span id="ttf-live-chg" style="font-size:11px;font-weight:700">—</span>
-        <a href="https://www.tradingview.com/symbols/ICEENDEX-TFM1!/" target="_blank" rel="noopener" style="color:var(--accent);font-size:9px;letter-spacing:1px;text-decoration:none">↗ TV</a>
-      </div>
-    </div>
-    <div style="padding:8px 8px 8px;position:relative">
-      <canvas id="ttf-canvas" style="width:100%;height:130px;display:block;border-radius:3px;background:rgba(0,0,0,.2)"></canvas>
-      <div id="ttf-tooltip" style="position:absolute;top:12px;left:12px;background:rgba(13,20,32,.95);border:1px solid var(--border);padding:4px 10px;font-size:10px;color:var(--text);border-radius:3px;pointer-events:none;display:none"></div>
-    </div>
-  </div>`;
-
+  let html=COMMS_METALS.map(s=>{const d=metalData[s.sym];if(d)tkBuf.push({sym:s.n,price:`$${fmt(d.price)}`,chg:d.chg});return makeRow(s.n,s.d,s.e,d?.price,d?.chg);}).join('');
+  if(FINNHUB_KEY) html+=COMMS_ETFS.map(s=>{const d=etfData[s.sym];if(d)tkBuf.push({sym:s.n,price:`$${fmt(d.price)}`,chg:d.chg});return makeRow(s.n,s.d,s.e,d?.price,d?.chg);}).join('');
   document.getElementById('comms').innerHTML=html||'<div class="err-msg">⚠ Commodity data unavailable</div>';
-  setTimeout(()=>{if(typeof initTTFChart==='function')initTTFChart();},200);
 }
 
 function renderBonds(data){
   if(!FINNHUB_KEY){document.getElementById('bonds').innerHTML='<div class="bc"><div class="err-msg">⚠ Enter Finnhub key for bonds</div></div>';return;}
-  document.getElementById('bonds').innerHTML=BOND_DEFS.map(b=>{const d=data[b.sym];return`<a href="https://www.tradingview.com/symbols/${b.sym}/" target="_blank" rel="noopener" style="text-decoration:none;color:inherit"><div class="bc" style="cursor:pointer"><div class="bl">${b.n} · ${b.d}</div><div class="bv">${d?`$${fmt(d.price,2)}`:'—'}</div><div class="bch ${d?ci(d.chg).c:'nu'}">${d?ci(d.chg).t:'—'}</div></div></a>`;}).join('');
+  document.getElementById('bonds').innerHTML=BOND_DEFS.map(b=>{const d=data[b.sym];return`<div class="bc"><div class="bl">${b.n} · ${b.d}</div><div class="bv">${d?`$${fmt(d.price,2)}`:'—'}</div><div class="bch ${d?ci(d.chg).c:'nu'}">${d?ci(d.chg).t:'—'}</div></div>`;}).join('');
 }
 
 function renderCrypto(coins){
   if(!coins||!Array.isArray(coins)){document.getElementById('crypto').innerHTML='<div class="err-msg">⚠ CoinGecko unavailable</div>';return;}
   const ic={bitcoin:'₿',ethereum:'Ξ',binancecoin:'BNB',solana:'◎',ripple:'XRP',cardano:'₳',dogecoin:'Ð'};
   document.getElementById('crypto').innerHTML=coins.map(c=>{const chg=c.price_change_percentage_24h||0;const cl=chg>=0?'up':'dn';tkBuf.push({sym:c.symbol.toUpperCase(),price:`$${fmt(c.current_price)}`,chg});
-  const link=`https://www.coingecko.com/en/coins/${c.id}`;
-  return`<div class="ar" style="cursor:pointer"><a href="${link}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px"><div class="al"><div class="an">${ic[c.id]||''} ${c.symbol.toUpperCase()}</div><div class="ad">${c.name}</div></div><div class="aprx">$${fmt(c.current_price)}</div><div class="abadge ${cl}">${chg>=0?'+':''}${chg.toFixed(2)}%</div><div class="spk">${sparkHTML(chg>=0)}</div></a></div>`;}).join('');
+  return`<div class="ar"><div class="al"><div class="an">${ic[c.id]||''} ${c.symbol.toUpperCase()}</div><div class="ad">${c.name}</div></div><div class="aprx">$${fmt(c.current_price)}</div><div class="abadge ${cl}">${chg>=0?'+':''}${chg.toFixed(2)}%</div><div class="spk">${sparkHTML(chg>=0)}</div></div>`;}).join('');
 }
 
 function renderForex(rates){
-  const P=[
-    {k:'EUR',inv:1,n:'EUR/USD',d:'Euro / Dollar',tv:'EURUSD'},
-    {k:'GBP',inv:1,n:'GBP/USD',d:'Pound / Dollar',tv:'GBPUSD'},
-    {k:'JPY',inv:0,n:'USD/JPY',d:'Dollar / Yen',tv:'USDJPY'},
-    {k:'CHF',inv:0,n:'USD/CHF',d:'Dollar / Franc',tv:'USDCHF'},
-    {k:'RUB',inv:0,n:'USD/RUB',d:'Dollar / Ruble',tv:'USDRUB'},
-    {k:'CNY',inv:0,n:'USD/CNY',d:'Dollar / Yuan',tv:'USDCNH'},
-    {k:'AUD',inv:1,n:'AUD/USD',d:'Aussie / Dollar',tv:'AUDUSD'},
-    {k:'CAD',inv:0,n:'USD/CAD',d:'Dollar / Loonie',tv:'USDCAD'}
-  ];
+  const P=[{k:'EUR',inv:1,n:'EUR/USD',d:'Euro / Dollar'},{k:'GBP',inv:1,n:'GBP/USD',d:'Pound / Dollar'},{k:'JPY',inv:0,n:'USD/JPY',d:'Dollar / Yen'},{k:'CHF',inv:0,n:'USD/CHF',d:'Dollar / Franc'},{k:'RUB',inv:0,n:'USD/RUB',d:'Dollar / Ruble'},{k:'CNY',inv:0,n:'USD/CNY',d:'Dollar / Yuan'},{k:'AUD',inv:1,n:'AUD/USD',d:'Aussie / Dollar'},{k:'CAD',inv:0,n:'USD/CAD',d:'Dollar / Loonie'}];
   if(!rates||!Object.keys(rates).length){document.getElementById('forex').innerHTML='<div class="err-msg">⚠ Forex unavailable</div>';return;}
   document.getElementById('forex').innerHTML=P.map(p=>{const raw=rates[p.k];if(!raw)return'';const price=p.inv?+(1/raw).toFixed(4):+raw.toFixed(4);const chg=(Math.random()-0.49)*0.8;const c=ci(chg);tkBuf.push({sym:p.n,price:price.toFixed(4),chg});
-  const link=`https://www.tradingview.com/symbols/FX:${p.tv}/`;
-  return`<div class="ar" style="cursor:pointer"><a href="${link}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px"><div class="al"><div class="an">${p.n}</div><div class="ad">${p.d}</div></div><div class="aprx">${price.toFixed(4)}</div><div class="abadge ${c.c}">${c.t}</div><div class="spk">${sparkHTML(chg>=0)}</div></a></div>`;}).join('');
+  return`<div class="ar"><div class="al"><div class="an">${p.n}</div><div class="ad">${p.d}</div></div><div class="aprx">${price.toFixed(4)}</div><div class="abadge ${c.c}">${c.t}</div><div class="spk">${sparkHTML(chg>=0)}</div></div>`;}).join('');
 }
 
 function renderHeatmap(sdata){
@@ -703,7 +643,7 @@ function renderHeatmap(sdata){
     const d=sdata[s.sym];const chg=d?d.chg:(Math.random()-0.5)*2.5;
     const abs=Math.abs(chg),int=Math.min(abs/3,1);
     const bg=chg>=0?`rgb(${Math.round(10*(1-int))},${Math.round(80+int*150)},${Math.round(50+int*30)})`:`rgb(${Math.round(120+int*120)},${Math.round(10*(1-int))},${Math.round(20+int*30)})`;
-    return`<a href="https://www.tradingview.com/symbols/${s.sym}/" target="_blank" rel="noopener" style="text-decoration:none"><div class="hc" style="background:${bg};cursor:pointer"><div class="hs">${s.n}</div><div class="hp">${chg>=0?'+':''}${chg.toFixed(1)}%</div></div></a>`;}).join('');
+    return`<div class="hc" style="background:${bg}"><div class="hs">${s.n}</div><div class="hp">${chg>=0?'+':''}${chg.toFixed(1)}%</div></div>`;}).join('');
 }
 
 function renderFG(fg){
@@ -777,149 +717,6 @@ async function refreshAll(){
 setInterval(refreshAll,60000);
 refreshAll();
 loadInitialNews();
-</script>
-<!-- TTF Canvas Chart -->
-<script>
-// Fetch TTF price via rss2json / allorigins from a free energy data proxy
-// Primary: stooq.com daily CSV for TTF futures (public, no key)
-// Fallback: generate realistic synthetic data from a seeded base
-
-async function fetchTTFHistory(){
-  // Try stooq.com — free daily OHLC CSV, no auth
-  try{
-    const url='https://stooq.com/q/d/l/?s=ttf.f&i=d';
-    const proxy=`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-    const r=await fetch(proxy,{signal:AbortSignal.timeout(10000)});
-    if(r.ok){
-      const j=await r.json();
-      const csv=j.contents||'';
-      if(csv&&csv.includes(',')){
-        const lines=csv.trim().split('\n').slice(1); // skip header
-        const pts=lines.slice(-35).map(l=>{
-          const p=l.split(',');
-          if(p.length<5)return null;
-          return{date:p[0],close:parseFloat(p[4])};
-        }).filter(p=>p&&!isNaN(p.close)&&p.close>0);
-        if(pts.length>=5)return pts;
-      }
-    }
-  }catch(e){}
-
-  // Fallback: synthetic TTF data anchored to realistic range (€/MWh)
-  const pts=[];
-  let v=48+Math.random()*8;
-  const now=new Date();
-  for(let i=34;i>=0;i--){
-    const d=new Date(now);d.setDate(d.getDate()-i);
-    if(d.getDay()===0||d.getDay()===6)continue;
-    v+=((Math.random()-0.5)*2.8);
-    v=Math.max(30,Math.min(75,v));
-    pts.push({date:d.toISOString().slice(0,10),close:+v.toFixed(2)});
-  }
-  return pts;
-}
-
-function drawTTFChart(pts){
-  const canvas=document.getElementById('ttf-canvas');
-  if(!canvas||!pts||pts.length<2)return;
-  const dpr=window.devicePixelRatio||1;
-  const W=canvas.offsetWidth||canvas.parentElement.clientWidth||400;
-  const H=130;
-  canvas.width=W*dpr;canvas.height=H*dpr;
-  canvas.style.width=W+'px';canvas.style.height=H+'px';
-  const ctx=canvas.getContext('2d');
-  ctx.scale(dpr,dpr);
-
-  const prices=pts.map(p=>p.close);
-  const minP=Math.min(...prices);
-  const maxP=Math.max(...prices);
-  const pad={t:16,b:20,l:8,r:46};
-  const cw=W-pad.l-pad.r;
-  const ch=H-pad.t-pad.b;
-  const xStep=cw/(prices.length-1);
-  const yScale=ch/(maxP-minP||1);
-  const toX=i=>pad.l+i*xStep;
-  const toY=v=>pad.t+ch-(v-minP)*yScale;
-
-  // Gradient fill
-  const last=prices[prices.length-1];
-  const first=prices[0];
-  const up=last>=first;
-  const lineCol=up?'#00e676':'#ff3d57';
-  const grad=ctx.createLinearGradient(0,pad.t,0,H-pad.b);
-  grad.addColorStop(0,up?'rgba(0,230,118,.18)':'rgba(255,61,87,.18)');
-  grad.addColorStop(1,'rgba(0,0,0,0)');
-
-  // Fill area
-  ctx.beginPath();
-  ctx.moveTo(toX(0),toY(prices[0]));
-  prices.forEach((p,i)=>{if(i>0)ctx.lineTo(toX(i),toY(p));});
-  ctx.lineTo(toX(prices.length-1),H-pad.b);
-  ctx.lineTo(toX(0),H-pad.b);
-  ctx.closePath();
-  ctx.fillStyle=grad;ctx.fill();
-
-  // Line
-  ctx.beginPath();
-  ctx.moveTo(toX(0),toY(prices[0]));
-  prices.forEach((p,i)=>{if(i>0)ctx.lineTo(toX(i),toY(p));});
-  ctx.strokeStyle=lineCol;ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
-
-  // Y axis labels (right side)
-  ctx.fillStyle='rgba(90,122,144,.7)';ctx.font='9px IBM Plex Mono,monospace';ctx.textAlign='right';
-  [minP,maxP,(minP+maxP)/2].forEach(v=>{
-    const y=toY(v);
-    ctx.fillText(v.toFixed(1),W-2,y+3);
-  });
-
-  // X axis labels (every ~7 pts)
-  ctx.fillStyle='rgba(90,122,144,.6)';ctx.font='8px IBM Plex Mono,monospace';ctx.textAlign='center';
-  pts.forEach((p,i)=>{
-    if(i%(Math.ceil(prices.length/5))===0){
-      const d=p.date.slice(5); // MM-DD
-      ctx.fillText(d,toX(i),H-4);
-    }
-  });
-
-  // Current price dot
-  const lx=toX(prices.length-1);const ly=toY(last);
-  ctx.beginPath();ctx.arc(lx,ly,4,0,Math.PI*2);
-  ctx.fillStyle=lineCol;ctx.fill();
-  ctx.strokeStyle='#07090d';ctx.lineWidth=1.5;ctx.stroke();
-
-  // Live price label
-  const chgPct=((last-first)/first*100);
-  document.getElementById('ttf-live-price').textContent=last.toFixed(2)+' €';
-  const chgEl=document.getElementById('ttf-live-chg');
-  chgEl.textContent=(chgPct>=0?'+':'')+chgPct.toFixed(2)+'%';
-  chgEl.style.color=up?'var(--green)':'var(--red)';
-
-  // Hover tooltip
-  canvas.onmousemove=function(e){
-    const rect=canvas.getBoundingClientRect();
-    const mx=e.clientX-rect.left;
-    const idx=Math.round((mx-pad.l)/xStep);
-    if(idx<0||idx>=prices.length)return;
-    const tt=document.getElementById('ttf-tooltip');
-    tt.style.display='block';
-    tt.innerHTML=`<span style="color:var(--text2)">${pts[idx].date}</span> &nbsp; <strong style="color:var(--accent)">${prices[idx].toFixed(2)} €/MWh</strong>`;
-    tt.style.left=Math.min(mx+10,W-150)+'px';
-    tt.style.top='12px';
-  };
-  canvas.onmouseleave=()=>{document.getElementById('ttf-tooltip').style.display='none';};
-}
-
-async function initTTFChart(){
-  const pts=await fetchTTFHistory();
-  drawTTFChart(pts);
-}
-
-// Init after a short delay to let renderComms settle the DOM
-document.addEventListener('DOMContentLoaded',()=>setTimeout(initTTFChart,800));
-// Also re-draw on window resize
-window.addEventListener('resize',()=>{
-  if(document.getElementById('ttf-canvas'))initTTFChart();
-});
 </script>
 </body>
 </html>
