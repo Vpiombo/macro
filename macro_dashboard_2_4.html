@@ -356,7 +356,32 @@ async function fetchGoldApi(){
 async function fetchCrypto(){try{return await(await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,solana,ripple,cardano,dogecoin&order=market_cap_desc&per_page=7&sparkline=false&price_change_percentage=24h',{signal:AbortSignal.timeout(9000)})).json();}catch(e){return null;}}
 
 // 4) FRANKFURTER
-async function fetchForex(){try{const j=await(await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,JPY,CHF,AUD,CAD,RUB,CNY',{signal:AbortSignal.timeout(8000)})).json();return j.rates||{};}catch(e){return{};}}
+async function fetchForex(){
+  let rates={};
+  // 1. Frankfurter for main pairs (dropped RUB after 2022)
+  try{const j=await(await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,JPY,CHF,AUD,CAD,CNY',{signal:AbortSignal.timeout(8000)})).json();rates=j.rates||{};}catch(e){}
+  // 2. Fetch RUB — try three sources, use first that works
+  const rubSources=[
+    async()=>{const j=await(await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json',{signal:AbortSignal.timeout(7000)})).json();return j?.usd?.rub||null;},
+    async()=>{const j=await(await fetch('https://latest.currency-api.pages.dev/v1/currencies/usd.json',{signal:AbortSignal.timeout(7000)})).json();return j?.usd?.rub||null;},
+    async()=>{const j=await(await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(7000)})).json();return j?.rates?.RUB||null;},
+    async()=>{const j=await(await fetch('https://api.exchangerate-api.com/v4/latest/USD',{signal:AbortSignal.timeout(7000)})).json();return j?.rates?.RUB||null;},
+  ];
+  for(const src of rubSources){
+    try{
+      const rub=await src();
+      if(rub&&rub>50){
+        rates.RUB=+rub.toFixed(4);
+        // Calculate EUR/RUB cross-rate
+        const eurRate=rates.EUR; // EUR per 1 USD from Frankfurter
+        if(eurRate) rates.EURRUB=+(rub/eurRate).toFixed(2);
+        console.log('RUB loaded:',rub);
+        break;
+      }
+    }catch(e){console.warn('RUB source failed',e.message);}
+  }
+  return rates;
+}
 
 // 5) FEAR & GREED
 async function fetchFG(){try{const j=await(await fetch('https://api.alternative.me/fng/?limit=1',{signal:AbortSignal.timeout(8000)})).json();if(j?.data?.[0])return{value:parseInt(j.data[0].value),label:j.data[0].value_classification.toUpperCase()};return null;}catch(e){return null;}}
@@ -632,7 +657,6 @@ function renderCrypto(coins){
 }
 
 function renderForex(rates){
-  if(rates['RUB']&&rates['EUR']) rates['EURRUB']=+(rates['RUB']/rates['EUR']).toFixed(2);
   const P=[{k:'EUR',inv:1,n:'EUR/USD',d:'Euro / Dollar'},{k:'GBP',inv:1,n:'GBP/USD',d:'Pound / Dollar'},{k:'JPY',inv:0,n:'USD/JPY',d:'Dollar / Yen'},{k:'CHF',inv:0,n:'USD/CHF',d:'Dollar / Franc'},{k:'RUB',inv:0,n:'USD/RUB',d:'Dollar / Russian Ruble'},{k:'EURRUB',inv:0,n:'EUR/RUB',d:'Euro / Russian Ruble'},{k:'CNY',inv:0,n:'USD/CNY',d:'Dollar / Yuan'},{k:'AUD',inv:1,n:'AUD/USD',d:'Aussie / Dollar'},{k:'CAD',inv:0,n:'USD/CAD',d:'Dollar / Loonie'}];
   if(!rates||!Object.keys(rates).length){document.getElementById('forex').innerHTML='<div class="err-msg">⚠ Forex unavailable</div>';return;}
   document.getElementById('forex').innerHTML=P.map(p=>{const raw=rates[p.k];if(!raw)return'';const price=p.inv?+(1/raw).toFixed(4):+raw.toFixed(4);const chg=(Math.random()-0.49)*0.8;const c=ci(chg);tkBuf.push({sym:p.n,price:price.toFixed(4),chg});
