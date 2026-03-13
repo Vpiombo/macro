@@ -214,7 +214,7 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 
   <!-- TOP NEWS -->
   <div class="pnl c2">
-    <div class="ph"><span class="pt">📰 Bloomberg News</span><span class="pb">RSS LIVE FEEDS</span></div>
+    <div class="ph"><span class="pt">📰 Market News</span><span class="pb">FINNHUB + RSS LIVE</span></div>
     <div class="news-tabs" id="newsTabs">
       <button class="ntab active" data-feed="markets" onclick="switchNewsFeed('markets',this)">📈 Markets</button>
       <button class="ntab" data-feed="economics" onclick="switchNewsFeed('economics',this)">🏦 Economics</button>
@@ -473,179 +473,153 @@ async function fetchNews(){
 }
 
 // ═══════════════════════════════════════════════════════════════
-// BLOOMBERG RSS FEEDS — FIXED VERSION
+// NEWS FEEDS — Finnhub primary + RSS fallback
 // ═══════════════════════════════════════════════════════════════
-const BLOOMBERG_FEEDS={
-  markets:   {url:'https://feeds.bloomberg.com/markets/news.rss',    label:'Markets',    cls:'markets'},
-  economics: {url:'https://feeds.bloomberg.com/economics/news.rss',  label:'Economics',  cls:'economics'},
-  politics:  {url:'https://feeds.bloomberg.com/politics/news.rss',   label:'Politics',   cls:'politics'},
-  technology:{url:'https://feeds.bloomberg.com/technology/news.rss', label:'Technology', cls:'technology'},
-  wealth:    {url:'https://feeds.bloomberg.com/wealth/news.rss',     label:'Wealth',     cls:'wealth'},
-  business:  {url:'https://feeds.bloomberg.com/business/news.rss',   label:'Business',   cls:'business'},
-  green:     {url:'https://feeds.bloomberg.com/green/news.rss',      label:'Green',      cls:'green'},
-  opinion:   {url:'https://feeds.bloomberg.com/bview/news.rss',      label:'Opinion',    cls:'opinion'},
-  industries:{url:'https://feeds.bloomberg.com/industries/news.rss', label:'Industries', cls:'industries'},
+// Finnhub category mapping for each tab
+const FINNHUB_CATEGORIES={
+  markets:'general', economics:'general', politics:'general',
+  technology:'technology', wealth:'general', business:'general',
+  green:'general', opinion:'general', industries:'general',
 };
-
+// RSS fallback feeds per tab (multiple proxies tried in order)
+const RSS_FEEDS={
+  markets:   'https://feeds.content.dowjones.io/public/rss/mw_realtimeheadlines',
+  economics: 'https://feeds.content.dowjones.io/public/rss/mw_marketpulse',
+  politics:  'https://feeds.content.dowjones.io/public/rss/mw_topstories',
+  technology:'https://feeds.content.dowjones.io/public/rss/mw_technology',
+  wealth:    'https://feeds.content.dowjones.io/public/rss/mw_personalfinance',
+  business:  'https://feeds.content.dowjones.io/public/rss/mw_topstories',
+  green:     'https://feeds.content.dowjones.io/public/rss/mw_topstories',
+  opinion:   'https://feeds.content.dowjones.io/public/rss/mw_topstories',
+  industries:'https://feeds.content.dowjones.io/public/rss/mw_topstories',
+};
+const FEED_LABELS={
+  markets:'Markets',economics:'Economics',politics:'Politics',
+  technology:'Technology',wealth:'Wealth',business:'Business',
+  green:'Green',opinion:'Opinion',industries:'Industries',
+};
 const rssCache={};
 let activeNewsFeed='markets';
 
-function parseRSS(xml,label,cls){
+function parseRSS(xml,label){
   try{
-    const parser=new DOMParser();
-    const doc=parser.parseFromString(xml,'application/xml');
-    if(doc.querySelector('parsererror')) return null;
-
+    const doc=new DOMParser().parseFromString(xml,'application/xml');
+    if(doc.querySelector('parsererror'))return null;
     const items=[...doc.querySelectorAll('item')];
     if(!items.length)return null;
-
     return items.slice(0,20).map(item=>{
       const title=stripHtml(item.querySelector('title')?.textContent||'');
       const link=item.querySelector('link')?.textContent?.trim()||item.querySelector('guid')?.textContent?.trim()||'#';
-      const pubDate=item.querySelector('pubDate')?.textContent||'';
-      const ts=pubDate?new Date(pubDate).getTime()/1000:0;
-
-      return{
-        headline:title,
-        url:link,
-        datetime:Number.isFinite(ts)?ts:0,
-        source:'Bloomberg',
-        category:label,
-        cls
-      };
-    }).filter(x=>x.headline&&x.url);
-  }catch(e){
-    return null;
-  }
+      const pub=item.querySelector('pubDate')?.textContent||'';
+      const ts=pub?new Date(pub).getTime()/1000:0;
+      return{headline:title,url:link,datetime:Number.isFinite(ts)?ts:0,source:'MarketWatch',category:label};
+    }).filter(x=>x.headline&&x.url&&x.url!=='#');
+  }catch(e){return null;}
 }
 
-async function fetchBloombergFeed(feedKey,force=false){
-  const cacheMs=3*60*1000;
-
-  if(!force&&rssCache[feedKey]&&(Date.now()-rssCache[feedKey].ts)<cacheMs){
-    return rssCache[feedKey].items;
-  }
-
-  const feed=BLOOMBERG_FEEDS[feedKey];
-  if(!feed)return null;
-
+async function fetchRSSFallback(feedKey){
+  const url=RSS_FEEDS[feedKey]||RSS_FEEDS.markets;
+  const label=FEED_LABELS[feedKey]||'News';
   const proxies=[
-    {
-      name:'rss2json',
-      run:async()=>{
-        const j=await fetchWithTimeout(
-          `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(feed.url)}&count=20`,
-          12000,
-          'json'
-        );
-        if(j.status!=='ok'||!Array.isArray(j.items)||!j.items.length) throw new Error('empty');
-        return j.items.map(i=>({
-          headline:stripHtml(i.title||''),
-          url:i.link||i.guid||'#',
-          datetime:i.pubDate?new Date(i.pubDate).getTime()/1000:0,
-          source:'Bloomberg',
-          category:feed.label,
-          cls:feed.cls
-        })).filter(x=>x.headline&&x.url);
-      }
+    async()=>{
+      const j=await fetchWithTimeout(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,12000,'json');
+      const items=parseRSS(j.contents||'',label);
+      if(!items?.length)throw new Error('empty');
+      return items;
     },
-    {
-      name:'allorigins',
-      run:async()=>{
-        const j=await fetchWithTimeout(
-          `https://api.allorigins.win/get?url=${encodeURIComponent(feed.url)}`,
-          12000,
-          'json'
-        );
-        const items=parseRSS(j.contents||'',feed.label,feed.cls);
-        if(!items||!items.length) throw new Error('empty');
-        return items;
-      }
+    async()=>{
+      const xml=await fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(url)}`,12000,'text');
+      const items=parseRSS(xml,label);
+      if(!items?.length)throw new Error('empty');
+      return items;
     },
-    {
-      name:'corsproxy',
-      run:async()=>{
-        const xml=await fetchWithTimeout(
-          `https://corsproxy.io/?${encodeURIComponent(feed.url)}`,
-          12000,
-          'text'
-        );
-        const items=parseRSS(xml,feed.label,feed.cls);
-        if(!items||!items.length) throw new Error('empty');
-        return items;
-      }
-    }
+    async()=>{
+      const j=await fetchWithTimeout(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}&count=20`,12000,'json');
+      if(j.status!=='ok'||!j.items?.length)throw new Error('empty');
+      return j.items.map(i=>({
+        headline:stripHtml(i.title||''),url:i.link||i.guid||'#',
+        datetime:i.pubDate?new Date(i.pubDate).getTime()/1000:0,
+        source:'MarketWatch',category:label
+      })).filter(x=>x.headline&&x.url);
+    },
   ];
-
-  for(const proxy of proxies){
-    try{
-      const items=await proxy.run();
-      if(items&&items.length){
-        rssCache[feedKey]={items,ts:Date.now(),proxy:proxy.name};
-        return items;
-      }
-    }catch(e){}
-  }
-
+  for(const p of proxies){try{const r=await p();if(r?.length)return r;}catch(e){}}
   return null;
 }
 
-function renderBloombergNews(articles,feedKey){
-  const feed=BLOOMBERG_FEEDS[feedKey||activeNewsFeed]||BLOOMBERG_FEEDS.markets;
-  const el=document.getElementById('news');
+async function fetchNewsFeed(feedKey,force=false){
+  const cacheMs=3*60*1000;
+  if(!force&&rssCache[feedKey]&&(Date.now()-rssCache[feedKey].ts)<cacheMs)return rssCache[feedKey].items;
+  const label=FEED_LABELS[feedKey]||'News';
+  // Primary: Finnhub news (no proxy needed, direct API)
+  if(FINNHUB_KEY){
+    try{
+      const cat=FINNHUB_CATEGORIES[feedKey]||'general';
+      const r=await fetch(`https://finnhub.io/api/v1/news?category=${cat}&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(9000)});
+      if(r.ok){
+        const j=await r.json();
+        if(Array.isArray(j)&&j.length){
+          const items=j.slice(0,20).map(a=>({
+            headline:a.headline,url:a.url,datetime:a.datetime,
+            source:a.source||'Finnhub',category:label
+          })).filter(x=>x.headline&&x.url);
+          if(items.length){rssCache[feedKey]={items,ts:Date.now()};return items;}
+        }
+      }
+    }catch(e){}
+  }
+  // Fallback: RSS via proxies
+  const rssItems=await fetchRSSFallback(feedKey);
+  if(rssItems?.length){rssCache[feedKey]={items:rssItems,ts:Date.now()};return rssItems;}
+  return null;
+}
 
+function renderNewsItems(articles,feedKey){
+  const label=FEED_LABELS[feedKey||activeNewsFeed]||'News';
+  const el=document.getElementById('news');
   if(!articles||!articles.length){
-    el.innerHTML=`
-      <div class="news-feed-err">
-        ⚠ Bloomberg ${feed.label} feed could not load
-        <button
-          onclick="switchNewsFeed('${feedKey||activeNewsFeed}', null, true)"
-          style="background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:10px;padding:3px 10px;cursor:pointer;border-radius:3px;letter-spacing:1px;margin-left:8px"
-        >⟳ RETRY</button>
-      </div>
-    `;
+    el.innerHTML=`<div class="news-feed-err">
+      ⚠ ${label} feed could not load
+      <button onclick="switchNewsFeed('${feedKey||activeNewsFeed}',null,true)"
+        style="background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);
+        color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:10px;
+        padding:3px 10px;cursor:pointer;border-radius:3px;letter-spacing:1px;margin-left:8px">
+        ⟳ RETRY</button></div>`;
     return;
   }
-
   el.innerHTML=articles.slice(0,20).map(a=>{
     const ts=a.datetime&&a.datetime>1000?timeAgo(a.datetime):'';
-    return`
-      <div class="news-item">
-        <a href="${a.url||'#'}" target="_blank" rel="noopener">
-          <div class="news-hl">${a.headline||'Untitled'}</div>
-          <div class="news-meta">
-            <span class="news-src">Bloomberg</span>
-            <span class="news-time">${ts}</span>
-            <span class="news-cat ${a.cls||feed.cls}">${a.category||feed.label}</span>
-          </div>
-        </a>
-      </div>
-    `;
+    const srcCls=feedKey||activeNewsFeed;
+    return`<div class="news-item">
+      <a href="${a.url||'#'}" target="_blank" rel="noopener">
+        <div class="news-hl">${a.headline||'Untitled'}</div>
+        <div class="news-meta">
+          <span class="news-src">${a.source||'News'}</span>
+          <span class="news-time">${ts}</span>
+          <span class="news-cat ${srcCls}">${a.category||label}</span>
+        </div>
+      </a>
+    </div>`;
   }).join('');
 }
 
 async function switchNewsFeed(feedKey,btn=null,force=false){
   activeNewsFeed=feedKey;
-
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
   const activeBtn=btn||document.querySelector(`.ntab[data-feed="${feedKey}"]`);
   if(activeBtn)activeBtn.classList.add('active');
-
-  document.getElementById('news').innerHTML=`
-    <div class="news-loading">
-      <span class="spin" style="display:inline-block;animation:rot 1s linear infinite">⟳</span>
-      FETCHING BLOOMBERG ${(BLOOMBERG_FEEDS[feedKey]?.label||feedKey).toUpperCase()} FEED...
-    </div>
-  `;
-
-  const items=await fetchBloombergFeed(feedKey,force);
-  renderBloombergNews(items,feedKey);
+  document.getElementById('news').innerHTML=`<div class="news-loading">
+    <span class="spin" style="display:inline-block;animation:rot 1s linear infinite">⟳</span>
+    FETCHING ${(FEED_LABELS[feedKey]||feedKey).toUpperCase()} FEED...</div>`;
+  const items=await fetchNewsFeed(feedKey,force);
+  renderNewsItems(items,feedKey);
 }
 
 async function loadInitialNews(force=false){
-  const items=await fetchBloombergFeed(activeNewsFeed,force);
-  renderBloombergNews(items,activeNewsFeed);
+  const items=await fetchNewsFeed(activeNewsFeed,force);
+  renderNewsItems(items,activeNewsFeed);
 }
+
 
 // ═══════════════════════════════════════════════════════════════
 // DEFINITIONS
