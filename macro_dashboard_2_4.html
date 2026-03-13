@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MACRO TERMINAL</title>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Barlow+Condensed:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;700&family=Barlow+Condensed:wght@400;700;900&display=swap" rel="stylesheet" />
 <style>
 :root{
   --bg:#07090d;--bg2:#0c1118;--bg3:#10161f;
@@ -15,7 +15,6 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:13px;min-height:100vh;}
-/* ── HEADER ── */
 header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
 .logo{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;letter-spacing:5px;color:var(--accent);text-shadow:0 0 28px rgba(0,212,255,.5);}
 .logo span{color:var(--text2);font-weight:400;}
@@ -28,7 +27,7 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .rbtn:hover{border-color:var(--accent);color:var(--accent);}
 .spin{display:inline-block;animation:rot 1s linear infinite;}
 @keyframes rot{to{transform:rotate(360deg)}}
-/* ── API KEY ── */
+
 .api-setup{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 24px;display:flex;align-items:center;gap:12px;font-size:11px;flex-wrap:wrap;}
 .api-setup label{color:var(--text2);letter-spacing:1px;}
 .api-setup input{background:var(--bg3);border:1px solid var(--border);color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 10px;border-radius:3px;width:200px;}
@@ -40,7 +39,7 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .api-status{font-size:10px;padding:2px 8px;border-radius:3px;letter-spacing:1px;}
 .api-ok{color:var(--green);background:rgba(0,230,118,.08);}
 .api-missing{color:var(--orange);background:rgba(255,140,0,.08);}
-/* ── TICKER ── */
+
 .tk-wrap{background:var(--bg3);border-bottom:1px solid var(--border);padding:8px 0;overflow:hidden;position:relative;}
 .tk-wrap::before,.tk-wrap::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;}
 .tk-wrap::before{left:0;background:linear-gradient(to right,var(--bg3),transparent);}
@@ -48,16 +47,24 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .tk{display:flex;width:max-content;animation:scroll 90s linear infinite;}
 @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .ti{display:inline-flex;align-items:center;gap:8px;padding:0 22px;border-right:1px solid var(--border);font-size:12px;white-space:nowrap;}
-.ts{color:var(--accent);font-weight:700;}.tp{color:var(--text);}.up{color:var(--green);}.dn{color:var(--red);}.nu{color:var(--text2);}
-/* ── MACRO BAR ── */
+.ts{color:var(--accent);font-weight:700;}
+.tp{color:var(--text);}
+.up{color:var(--green);}
+.dn{color:var(--red);}
+.nu{color:var(--text2);}
+
 .mbar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--bg2);border-bottom:2px solid var(--border);}
-.mc{padding:18px 26px;border-right:1px solid var(--border);}.mc:last-child{border-right:none;}
+.mc{padding:18px 26px;border-right:1px solid var(--border);}
+.mc:last-child{border-right:none;}
 .mcl{font-size:10px;color:var(--text2);letter-spacing:3px;text-transform:uppercase;margin-bottom:6px;}
 .mcv{font-family:'Barlow Condensed',sans-serif;font-size:44px;font-weight:900;line-height:1;}
 .ca{color:var(--accent);text-shadow:0 0 20px rgba(0,212,255,.3);}
-.cy{color:var(--yellow);}.cg{color:var(--green);}.cr{color:var(--red);}.ct{color:var(--text);}
+.cy{color:var(--yellow);}
+.cg{color:var(--green);}
+.cr{color:var(--red);}
+.ct{color:var(--text);}
 .mcs{font-size:10px;color:var(--text3);margin-top:5px;}
-/* ═══ BLOOMBERG FUTURES STRIP ═══ */
+
 .fut-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0;background:var(--bg2);border-bottom:2px solid var(--border);}
 .fut-card{padding:14px 16px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;transition:background .2s;}
 .fut-card:hover{background:rgba(0,212,255,.03);}
@@ -71,19 +78,19 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .fut-row2{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
 .fut-price{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:900;color:var(--text);}
 .fut-pct{font-size:12px;font-weight:700;}
-.fut-chart{height:32px;display:flex;align-items:flex-end;gap:0;overflow:hidden;border-radius:2px;}
-.fut-chart canvas{width:100%;height:32px;}
-/* ═══ MAIN LAYOUT ═══ */
+
 .main-wrap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;padding:18px;}
-.c2{grid-column:span 2;}.c3{grid-column:span 3;}
-/* ── PANEL ── */
+.c2{grid-column:span 2;}
+.c3{grid-column:span 3;}
+
 .pnl{background:var(--panel);border:1px solid var(--border);border-radius:3px;overflow:hidden;}
 .ph{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;}
 .pt{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;letter-spacing:3px;color:var(--accent);text-transform:uppercase;}
 .pb{font-size:10px;padding:2px 8px;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);color:var(--text2);letter-spacing:1px;border-radius:2px;}
-/* ── ASSET ROW ── */
+
 .ar{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(26,43,60,.8);gap:10px;min-height:48px;}
-.ar:last-child{border-bottom:none;}.ar:hover{background:rgba(0,212,255,.03);}
+.ar:last-child{border-bottom:none;}
+.ar:hover{background:rgba(0,212,255,.03);}
 .al{flex:0 0 auto;width:125px;}
 .an{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .ad{font-size:13px;color:var(--text);white-space:nowrap;margin-top:1px;}
@@ -94,26 +101,27 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .abadge.nu{color:var(--text2);background:rgba(90,122,144,.07);}
 .spk{flex:0 0 50px;display:flex;align-items:flex-end;gap:2px;height:20px;}
 .sb{width:4px;border-radius:1px 1px 0 0;}
-/* ── HEATMAP ── */
+
 .hm{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;padding:14px;}
 .hc{aspect-ratio:2.2;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
 .hs{font-size:12px;font-weight:700;color:rgba(255,255,255,.9);}
 .hp{font-size:11px;color:rgba(255,255,255,.72);}
-/* ── BONDS ── */
+
 .bg{display:grid;grid-template-columns:1fr 1fr;}
 .bc{padding:18px 20px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
-.bc:nth-child(2n){border-right:none;}.bc:nth-child(n+3){border-bottom:none;}
+.bc:nth-child(2n){border-right:none;}
+.bc:nth-child(n+3){border-bottom:none;}
 .bl{font-size:10px;color:var(--text3);letter-spacing:2px;margin-bottom:6px;}
 .bv{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--text);}
 .bch{font-size:12px;margin-top:3px;}
-/* ── FEAR & GREED ── */
+
 .fgw{display:flex;flex-direction:column;align-items:center;padding:18px;gap:8px;}
 .fgn{font-family:'Barlow Condensed',sans-serif;font-size:72px;font-weight:900;line-height:1;}
 .fgl{font-family:'Barlow Condensed',sans-serif;font-size:18px;font-weight:700;letter-spacing:4px;}
 .fgbar{width:88%;height:12px;border-radius:6px;overflow:hidden;background:linear-gradient(90deg,#ff3d57,#ff8c00,#ffd000,#7ec8e3,#00e676);position:relative;}
 .fgneedle{position:absolute;top:-4px;width:5px;height:20px;background:#fff;border-radius:3px;box-shadow:0 0 10px #fff;transition:left 1.2s cubic-bezier(.34,1.2,.64,1);}
 .fgends{width:88%;display:flex;justify-content:space-between;font-size:11px;}
-/* ═══ NEWS PANEL ═══ */
+
 .news-tabs{display:flex;overflow-x:hidden;gap:0;border-bottom:1px solid var(--border);background:var(--bg2);}
 .ntab{flex:1 1 0;padding:8px 6px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.8px;color:var(--text2);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;text-transform:uppercase;white-space:nowrap;text-align:center;overflow:hidden;text-overflow:ellipsis;}
 .ntab:hover{color:var(--text);background:rgba(0,212,255,.04);}
@@ -139,11 +147,23 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .news-item a{text-decoration:none;color:inherit;}
 .news-loading{color:var(--text2);font-size:11px;padding:18px;text-align:center;letter-spacing:2px;}
 .news-feed-err{color:var(--orange);font-size:10px;padding:12px 18px;display:flex;align-items:center;gap:8px;}
-/* ── STATUS ── */
+
 .sbar{background:var(--bg2);border-top:1px solid var(--border);padding:8px 24px;display:flex;justify-content:space-between;font-size:10px;color:var(--text3);letter-spacing:.8px;}
 .err-msg{color:var(--orange);font-size:11px;padding:14px 18px;display:flex;align-items:center;gap:8px;}
 .ldph{height:14px;border-radius:3px;background:linear-gradient(90deg,var(--panel) 25%,var(--bg3) 50%,var(--panel) 75%);background-size:200% 100%;animation:shim 1.5s infinite;}
 @keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
+
+@media(max-width:1200px){
+  .main-wrap{grid-template-columns:1fr 1fr;}
+  .c2,.c3{grid-column:span 2;}
+}
+@media(max-width:760px){
+  .main-wrap{grid-template-columns:1fr;}
+  .c2,.c3{grid-column:span 1;}
+  .mbar{grid-template-columns:1fr 1fr;}
+  .bg{grid-template-columns:1fr;}
+  .bc{border-right:none;}
+}
 </style>
 </head>
 <body>
@@ -155,6 +175,7 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
     <button class="rbtn" id="rbtn" onclick="refreshAll()">⟳ REFRESH</button>
   </div>
 </header>
+
 <div class="api-setup">
   <label>FINNHUB KEY:</label>
   <input type="text" id="apiKeyInput" placeholder="paste your free API key" />
@@ -162,36 +183,36 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
   <span class="api-status api-missing" id="apiStatus">NO KEY</span>
   <span class="hint">Free → <a href="https://finnhub.io/register" target="_blank">finnhub.io/register</a> &nbsp;|&nbsp; Metals + Crypto + Forex work without any key</span>
 </div>
+
 <div class="tk-wrap"><div class="tk" id="tk"></div></div>
-<!-- MACRO BAR -->
+
 <div class="mbar">
   <div class="mc"><div class="mcl">FED FUNDS RATE</div><div class="mcv ca">4.25–4.50%</div><div class="mcs">Last changed Dec 2024</div></div>
   <div class="mc"><div class="mcl">US CPI INFLATION</div><div class="mcv cy">2.9%</div><div class="mcs">January 2025 · YoY</div></div>
   <div class="mc"><div class="mcl">US UNEMPLOYMENT</div><div class="mcv cg">4.0%</div><div class="mcs">January 2025</div></div>
   <div class="mc"><div class="mcl">GOLD SPOT</div><div class="mcv ct" id="goldSpot">—</div><div class="mcs">XAU/USD per oz · live</div></div>
 </div>
-<!-- ═══ BLOOMBERG-STYLE FUTURES STRIP ═══ -->
+
 <div class="fut-strip" id="futStrip"></div>
-<!-- ═══ MAIN GRID ═══ -->
+
 <div class="main-wrap">
-  <!-- STOCKS -->
   <div class="pnl">
     <div class="ph"><span class="pt">📈 Stocks</span><span class="pb">FINNHUB</span></div>
     <div id="stocks"><div class="ar"><div class="ldph" style="width:100%"></div></div></div>
   </div>
-  <!-- COMMODITIES -->
+
   <div class="pnl">
     <div class="ph"><span class="pt">🛢 Commodities</span><span class="pb">GOLD-API + ETFs</span></div>
     <div id="comms"><div class="ar"><div class="ldph" style="width:100%"></div></div></div>
   </div>
-  <!-- CRYPTO -->
+
   <div class="pnl">
     <div class="ph"><span class="pt">₿ Crypto</span><span class="pb">COINGECKO</span></div>
     <div id="crypto"><div class="ar"><div class="ldph" style="width:100%"></div></div></div>
   </div>
-  <!-- TOP NEWS -->
+
   <div class="pnl c2">
-    <div class="ph"><span class="pt">📰 Market News</span><span class="pb">FINNHUB + RSS LIVE</span></div>
+    <div class="ph"><span class="pt">📰 Market News</span><span class="pb">FINNHUB LIVE</span></div>
     <div class="news-tabs" id="newsTabs">
       <button class="ntab active" data-feed="markets" onclick="switchNewsFeed('markets',this)">📈 Markets</button>
       <button class="ntab" data-feed="economics" onclick="switchNewsFeed('economics',this)">🏦 Economics</button>
@@ -203,28 +224,32 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
       <button class="ntab" data-feed="opinion" onclick="switchNewsFeed('opinion',this)">💬 Opinion</button>
       <button class="ntab" data-feed="industries" onclick="switchNewsFeed('industries',this)">🏭 Industries</button>
     </div>
-    <div class="news-list" id="news"><div class="news-loading">⟳ LOADING BLOOMBERG FEED...</div></div>
+    <div class="news-list" id="news"><div class="news-loading">⟳ LOADING NEWS...</div></div>
   </div>
-  <!-- FOREX -->
+
   <div class="pnl">
     <div class="ph"><span class="pt">💱 Forex</span><span class="pb">FRANKFURTER</span></div>
     <div id="forex"><div class="ar"><div class="ldph" style="width:100%"></div></div></div>
   </div>
-  <!-- HEATMAP -->
+
   <div class="pnl c2">
     <div class="ph"><span class="pt">🔥 S&P Sector Heatmap</span><span class="pb">SECTOR ETFs</span></div>
     <div class="hm" id="hm"></div>
   </div>
-  <!-- FEAR GREED -->
+
   <div class="pnl">
     <div class="ph"><span class="pt">😱 Sentiment</span><span class="pb">FEAR & GREED</span></div>
     <div class="fgw">
       <svg viewBox="0 0 200 110" width="180" height="100" style="overflow:visible">
-        <defs><linearGradient id="ag" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stop-color="#ff3d57"/><stop offset="25%" stop-color="#ff8c00"/>
-          <stop offset="50%" stop-color="#ffd000"/><stop offset="75%" stop-color="#7ec8e3"/>
-          <stop offset="100%" stop-color="#00e676"/>
-        </linearGradient></defs>
+        <defs>
+          <linearGradient id="ag" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ff3d57"/>
+            <stop offset="25%" stop-color="#ff8c00"/>
+            <stop offset="50%" stop-color="#ffd000"/>
+            <stop offset="75%" stop-color="#7ec8e3"/>
+            <stop offset="100%" stop-color="#00e676"/>
+          </linearGradient>
+        </defs>
         <path d="M15 100 A85 85 0 0 1 185 100" fill="none" stroke="#1a2b3c" stroke-width="15" stroke-linecap="round"/>
         <path d="M15 100 A85 85 0 0 1 185 100" fill="none" stroke="url(#ag)" stroke-width="15" stroke-linecap="round" opacity=".8"/>
         <line id="ndl" x1="100" y1="100" x2="100" y2="22" stroke="white" stroke-width="3" stroke-linecap="round" style="transform-origin:100px 100px;transform:rotate(0deg);transition:transform 1.2s cubic-bezier(.34,1.2,.64,1)"/>
@@ -236,197 +261,507 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
       <div class="fgl" id="fgl">LOADING...</div>
     </div>
   </div>
-  <!-- BONDS -->
+
   <div class="pnl c2">
     <div class="ph"><span class="pt">📋 Bond ETFs</span><span class="pb">FINNHUB</span></div>
     <div class="bg" id="bonds"><div class="bc"><div class="ldph" style="width:80px;height:38px"></div></div></div>
   </div>
 </div>
+
 <div class="sbar">
   <span>📡 Finnhub · Gold-API.com · CoinGecko · Frankfurter · Alternative.me</span>
   <span id="lastUp">Not yet loaded</span>
   <span>🔄 Auto-refresh 60s</span>
 </div>
+
 <script>
-// ═══════════════════════════════════════════════════════════════
-// API KEY
-// ═══════════════════════════════════════════════════════════════
-let FINNHUB_KEY='';
+let FINNHUB_KEY = '';
+let currentNewsFeed = 'markets';
+let allNews = [];
+let tkBuf = [];
+
+const STOCKS = [
+  ['SPY','S&P 500 ETF'], ['QQQ','Nasdaq 100 ETF'], ['DIA','Dow ETF'],
+  ['IWM','Russell 2000 ETF'], ['AAPL','Apple'], ['MSFT','Microsoft']
+];
+
+const COMMODITY_ETFS = [
+  ['GLD','Gold ETF','XAU'], ['SLV','Silver ETF','XAG'], ['USO','Oil ETF',null],
+  ['CPER','Copper ETF','HG'], ['PPLT','Platinum ETF','XPT'], ['PALL','Palladium ETF','XPD']
+];
+
+const BONDS = [
+  ['TLT','20Y Treasury'], ['IEF','7-10Y Treasury'],
+  ['LQD','Inv Grade Corp'], ['HYG','High Yield']
+];
+
+const FUTURES = [
+  ['ES=F','S&P 500 Fut'], ['NQ=F','Nasdaq Fut'], ['YM=F','Dow Fut'],
+  ['CL=F','WTI Crude'], ['GC=F','Gold Fut'], ['^VIX','VIX']
+];
+
+const SECTORS = [
+  ['XLK','Tech'], ['XLF','Financials'], ['XLV','Health Care'], ['XLE','Energy'], ['XLY','Consumer Disc'],
+  ['XLP','Consumer Staples'], ['XLI','Industrials'], ['XLB','Materials'], ['XLU','Utilities'], ['XLRE','Real Estate']
+];
+
+const NEWS_KEYWORDS = {
+  markets: ['market','stocks','equities','shares','wall street','nasdaq','dow','s&p','bond','yield','trading','investor','futures','treasury'],
+  economics: ['inflation','cpi','jobs','gdp','economy','economic','fed','ecb','rates','rate hike','unemployment','consumer confidence'],
+  politics: ['trump','biden','white house','congress','senate','election','government','minister','president','policy','tariff','geopolitics'],
+  technology: ['ai','artificial intelligence','nvidia','chip','chips','apple','microsoft','google','meta','amazon','tesla','software','semiconductor'],
+  wealth: ['wealth','millionaire','billionaire','private bank','family office','luxury','rich','inheritance'],
+  business: ['merger','acquisition','earnings','ceo','company','corporate','deal','ipo','revenue','profit','business'],
+  green: ['climate','green','renewable','solar','wind','emissions','esg','battery','energy transition'],
+  opinion: ['opinion','commentary','analysis','column','view'],
+  industries: ['insurance','banking','retail','airline','autos','pharma','real estate','manufacturing','industrial']
+};
+
 function loadApiKey(){
-  try{FINNHUB_KEY=localStorage.getItem('finnhub_key')||'';}catch(e){}
+  try { FINNHUB_KEY = localStorage.getItem('finnhub_key') || ''; } catch(e) {}
   if(FINNHUB_KEY){
-    document.getElementById('apiKeyInput').value=FINNHUB_KEY;
-    document.getElementById('apiStatus').textContent='✓ SAVED';
-    document.getElementById('apiStatus').className='api-status api-ok';
+    document.getElementById('apiKeyInput').value = FINNHUB_KEY;
+    document.getElementById('apiStatus').textContent = '✓ SAVED';
+    document.getElementById('apiStatus').className = 'api-status api-ok';
   }
 }
+
 function saveApiKey(){
-  const k=document.getElementById('apiKeyInput').value.trim();
-  if(!k)return;
-  FINNHUB_KEY=k;
-  try{localStorage.setItem('finnhub_key',k);}catch(e){}
-  document.getElementById('apiStatus').textContent='✓ SAVED';
-  document.getElementById('apiStatus').className='api-status api-ok';
+  const k = document.getElementById('apiKeyInput').value.trim();
+  if(!k) return;
+  FINNHUB_KEY = k;
+  try { localStorage.setItem('finnhub_key', k); } catch(e) {}
+  document.getElementById('apiStatus').textContent = '✓ SAVED';
+  document.getElementById('apiStatus').className = 'api-status api-ok';
   refreshAll();
 }
-loadApiKey();
-// ═══════════════════════════════════════════════════════════════
-// HELPERS
-// ═══════════════════════════════════════════════════════════════
-const fmt=(v,d=2)=>{
-  if(v==null||isNaN(v))return'—';
-  const a=Math.abs(v);
-  if(a>=1e9)return(v/1e9).toFixed(2)+'B';
-  if(a>=1e6)return(v/1e6).toFixed(2)+'M';
-  if(a>=1000)return v.toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
+
+const fmt = (v,d=2) => {
+  if(v == null || isNaN(v)) return '—';
+  const a = Math.abs(v);
+  if(a >= 1e9) return (v/1e9).toFixed(2) + 'B';
+  if(a >= 1e6) return (v/1e6).toFixed(2) + 'M';
+  if(a >= 1000) return Number(v).toLocaleString('en-US',{minimumFractionDigits:d, maximumFractionDigits:d});
   return Number(v).toFixed(d);
 };
-const ci=v=>{
-  if(v==null||isNaN(v))return{t:'—',c:'nu'};
-  return{t:`${v>=0?'+':''}${Number(v).toFixed(2)}%`,c:v>=0?'up':'dn'};
+
+const ci = v => {
+  if(v == null || isNaN(v)) return { t:'—', c:'nu' };
+  return { t:`${v >= 0 ? '+' : ''}${Number(v).toFixed(2)}%`, c: v >= 0 ? 'up' : 'dn' };
 };
-const sparkHTML=up=>{
-  let vals=[],v=50;
+
+function sparkHTML(up){
+  let vals=[], v=50;
   for(let i=0;i<9;i++){
-    v+=((Math.random()-(up?0.42:0.58))*10);
-    v=Math.max(8,Math.min(92,v));
+    v += ((Math.random() - (up ? 0.42 : 0.58)) * 10);
+    v = Math.max(8, Math.min(92, v));
     vals.push(v);
   }
-  const mx=Math.max(...vals);
-  const col=vals[8]>vals[0]?'rgba(0,230,118,.8)':'rgba(255,61,87,.8)';
-  return vals.map(b=>`<div class="sb" style="height:${(b/mx)*20}px;background:${col}"></div>`).join('');
-};
-setInterval(()=>document.getElementById('clk').textContent=new Date().toUTCString().split(' ')[4]+' UTC',1000);
-let tkBuf=[];
-const buildTicker=()=>{
-  const all=[...tkBuf,...tkBuf];
-  document.getElementById('tk').innerHTML=all.map(t=>{
-    const c=ci(t.chg);
-    return`<span class="ti"><span class="ts">${t.sym}</span><span class="tp">${t.price}</span><span class="${c.c}">${c.t}</span></span>`;
-  }).join('');
-};
-// Generate mini sparkline SVG
+  const mx = Math.max(...vals);
+  const col = vals[8] > vals[0] ? 'rgba(0,230,118,.8)' : 'rgba(255,61,87,.8)';
+  return vals.map(b => `<div class="sb" style="height:${(b/mx)*20}px;background:${col}"></div>`).join('');
+}
+
 function miniChart(up,w=160,h=32){
-  let pts=[];let y=h/2;
-  const n=40;
+  let pts=[], y=h/2, n=40;
   for(let i=0;i<n;i++){
-    y+=(Math.random()-(up?0.38:0.62))*3;
-    y=Math.max(3,Math.min(h-3,y));
+    y += (Math.random() - (up ? 0.38 : 0.62)) * 3;
+    y = Math.max(3, Math.min(h-3, y));
     pts.push(`${(i/(n-1))*w},${y}`);
   }
-  const mid=Math.floor(n*0.55);
-  const col=up?'#00e676':'#ff3d57';
-  const p1=pts.slice(0,mid+1).join(' ');
-  const p2=pts.slice(mid).join(' ');
-  return`<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="display:block;width:100%"><polyline points="${p1}" fill="none" stroke="rgba(200,220,234,.5)" stroke-width="1.5"/><polyline points="${p2}" fill="none" stroke="${col}" stroke-width="2"/></svg>`;
+  const mid = Math.floor(n*0.55);
+  const col = up ? '#00e676' : '#ff3d57';
+  const p1 = pts.slice(0, mid+1).join(' ');
+  const p2 = pts.slice(mid).join(' ');
+  return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="display:block;width:100%"><polyline points="${p1}" fill="none" stroke="rgba(200,220,234,.5)" stroke-width="1.5"/><polyline points="${p2}" fill="none" stroke="${col}" stroke-width="2"/></svg>`;
 }
+
 function timeAgo(ts){
-  const d=Date.now()/1000-ts;
-  if(d<60)return'just now';
-  if(d<3600)return Math.floor(d/60)+'m ago';
-  if(d<86400)return Math.floor(d/3600)+'h ago';
-  return Math.floor(d/86400)+'d ago';
+  const d = Date.now()/1000 - ts;
+  if(d < 60) return 'just now';
+  if(d < 3600) return Math.floor(d/60) + 'm ago';
+  if(d < 86400) return Math.floor(d/3600) + 'h ago';
+  return Math.floor(d/86400) + 'd ago';
 }
-function stripHtml(s=''){
-  return s
-    .replace(/<!\\[CDATA\\[|\\]\\]>/g,'')
-    .replace(/<[^>]*>/g,' ')
-    .replace(/\\s+/g,' ')
-    .trim();
+
+function updateClock(){
+  document.getElementById('clk').textContent = new Date().toUTCString().split(' ')[4] + ' UTC';
 }
-async function fetchWithTimeout(url,ms=12000,as='json'){
-  const res=await fetch(url,{signal:AbortSignal.timeout(ms),cache:'no-store'});
-  if(!res.ok)throw new Error(`HTTP ${res.status}`);
-  return as==='text'?res.text():res.json();
+updateClock();
+setInterval(updateClock, 1000);
+
+function buildTicker(){
+  const all = [...tkBuf, ...tkBuf];
+  document.getElementById('tk').innerHTML = all.map(t => {
+    const c = ci(t.chg);
+    return `<span class="ti"><span class="ts">${t.sym}</span><span class="tp">${t.price}</span><span class="${c.c}">${c.t}</span></span>`;
+  }).join('');
 }
-// ═══════════════════════════════════════════════════════════════
-// DATA SOURCES
-// ═══════════════════════════════════════════════════════════════
-// 1) FINNHUB
+
 async function finnhubQuote(sym){
-  if(!FINNHUB_KEY)return null;
+  if(!FINNHUB_KEY) return null;
   try{
-    const r=await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(sym)}&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(8000)});
-    if(!r.ok)return null;
-    const j=await r.json();
-    if(!j||j.c===0||j.c==null)return null;
+    const r = await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(sym)}&token=${FINNHUB_KEY}`);
+    if(!r.ok) return null;
+    const j = await r.json();
+    if(!j || j.c == null || j.c === 0) return null;
     return j;
-  }catch(e){return null;}
+  }catch(e){
+    return null;
+  }
 }
+
 async function fetchFinnhubBatch(symbols){
-  const res={};
-  const proms=symbols.map((sym,i)=>new Promise(resolve=>setTimeout(()=>{
-    finnhubQuote(sym).then(d=>{
-      if(d&&d.c>0)res[sym]={price:d.c,chg:d.dp!=null?d.dp:(d.pc>0?((d.c-d.pc)/d.pc)*100:0),change:d.d||0,prevClose:d.pc};
+  const res = {};
+  await Promise.all(symbols.map((sym,i) =>
+    new Promise(resolve => setTimeout(async () => {
+      const d = await finnhubQuote(sym);
+      if(d && d.c > 0){
+        res[sym] = {
+          price: d.c,
+          chg: d.dp != null ? d.dp : (d.pc > 0 ? ((d.c-d.pc)/d.pc)*100 : 0),
+          change: d.d || 0,
+          prevClose: d.pc
+        };
+      }
       resolve();
-    });
-  },i*90)));
-  await Promise.all(proms);
-  return res;
-}
-// 2) GOLD-API.COM (metals — FREE, no key)
-async function fetchGoldApi(){
-  const syms=['XAU','XAG','HG','XPT','XPD'];
-  const res={};
-  await Promise.all(syms.map(sym=>
-    fetch(`https://api.gold-api.com/price/${sym}`,{signal:AbortSignal.timeout(8000)})
-      .then(r=>r.json())
-      .then(j=>{if(j&&j.price>0)res[sym]={price:j.price,chg:j.chp!=null?j.chp:0,ch:j.ch||0};})
-      .catch(()=>{})
+    }, i * 90))
   ));
   return res;
 }
-// 3) COINGECKO
-async function fetchCrypto(){
-  try{
-    return await (await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,solana,ripple,cardano,dogecoin&order=market_cap_desc&per_page=7&sparkline=false&price_change_percentage=24h',{signal:AbortSignal.timeout(9000)})).json();
-  }catch(e){return null;}
-}
-// 4) FRANKFURTER
-async function fetchForex(){
-  let rates={};
-  try{
-    const j=await (await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,JPY,CHF,AUD,CAD,CNY',{signal:AbortSignal.timeout(8000)})).json();
-    rates=j.rates||{};
-  }catch(e){}
-  const rubSources=[
-    async()=>{const j=await (await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json',{signal:AbortSignal.timeout(7000)})).json();return j?.usd?.rub||null;},
-    async()=>{const j=await (await fetch('https://latest.currency-api.pages.dev/v1/currencies/usd.json',{signal:AbortSignal.timeout(7000)})).json();return j?.usd?.rub||null;},
-    async()=>{const j=await (await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(7000)})).json();return j?.rates?.RUB||null;},
-    async()=>{const j=await (await fetch('https://api.exchangerate-api.com/v4/latest/USD',{signal:AbortSignal.timeout(7000)})).json();return j?.rates?.RUB||null;},
-  ];
-  for(const src of rubSources){
+
+async function fetchGoldApi(){
+  const syms = ['XAU','XAG','HG','XPT','XPD'];
+  const res = {};
+  await Promise.all(syms.map(async sym => {
     try{
-      const rub=await src();
-      if(rub&&rub>50){
-        rates.RUB=+rub.toFixed(4);
-        const eurRate=rates.EUR;
-        if(eurRate) rates.EURRUB=+(rub/eurRate).toFixed(2);
-        break;
+      const r = await fetch(`https://api.gold-api.com/price/${sym}`);
+      const j = await r.json();
+      if(j && j.price > 0){
+        res[sym] = { price:j.price, chg:j.chp != null ? j.chp : 0, ch:j.ch || 0 };
       }
     }catch(e){}
+  }));
+  return res;
+}
+
+async function fetchCrypto(){
+  try{
+    const r = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,solana,ripple,cardano,dogecoin&order=market_cap_desc&per_page=7&sparkline=false&price_change_percentage=24h');
+    return await r.json();
+  }catch(e){
+    return null;
   }
+}
+
+async function fetchForex(){
+  let rates = {};
+  try{
+    const r = await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,JPY,CHF,AUD,CAD,CNY');
+    const j = await r.json();
+    rates = j.rates || {};
+  }catch(e){}
   return rates;
 }
-// 5) FEAR & GREED
+
 async function fetchFG(){
   try{
-    const j=await (await fetch('https://api.alternative.me/fng/?limit=1',{signal:AbortSignal.timeout(8000)})).json();
-    if(j?.data?.[0])return{value:parseInt(j.data[0].value),label:j.data[0].value_classification.toUpperCase()};
+    const r = await fetch('https://api.alternative.me/fng/?limit=1');
+    const j = await r.json();
+    if(j?.data?.[0]){
+      return {
+        value: parseInt(j.data[0].value, 10),
+        label: String(j.data[0].value_classification || '').toUpperCase()
+      };
+    }
     return null;
-  }catch(e){return null;}
+  }catch(e){
+    return null;
+  }
 }
-// 6) FINNHUB MARKET NEWS (fallback only)
+
 async function fetchNews(){
-  if(!FINNHUB_KEY)return null;
+  if(!FINNHUB_KEY) return [];
   try{
-    const r=await fetch(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(8000)});
-    if(!r.ok)return null;
-    return await r.json();
-  }catch(e){return null;}
+    const r = await fetch(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`);
+    if(!r.ok) return [];
+    const j = await r.json();
+    return Array.isArray(j) ? j : [];
+  }catch(e){
+    return [];
+  }
 }
-// ═══════════════════════════════════════════════════════════════
-// NEWS FEEDS — keyword-filtered Finnhub + RSS fallback
-// ═══════════════════════════════════════════════════════════════
-const FINNHUB_CATEGORIES={
-  markets:'general', economics:'general', politics
+
+function renderAssetRows(targetId, rows){
+  const el = document.getElementById(targetId);
+  if(!rows.length){
+    el.innerHTML = `<div class="err-msg">No data available</div>`;
+    return;
+  }
+  el.innerHTML = rows.map(r => {
+    const c = ci(r.chg);
+    return `
+      <div class="ar">
+        <div class="al">
+          <div class="an">${r.name}</div>
+          <div class="ad">${r.sym}</div>
+        </div>
+        <div class="aprx">${r.price}</div>
+        <div class="abadge ${c.c}">${c.t}</div>
+        <div class="spk">${sparkHTML((r.chg || 0) >= 0)}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderStocks(data){
+  const rows = STOCKS.map(([sym,name]) => ({
+    sym, name,
+    price: data[sym]?.price ? '$' + fmt(data[sym].price,2) : '—',
+    chg: data[sym]?.chg ?? null
+  }));
+  renderAssetRows('stocks', rows);
+}
+
+function renderCommodities(goldData, etfData){
+  document.getElementById('goldSpot').textContent = goldData.XAU?.price ? '$' + fmt(goldData.XAU.price,2) : '—';
+
+  const rows = COMMODITY_ETFS.map(([sym,name,metalCode]) => {
+    let price = etfData[sym]?.price;
+    let chg = etfData[sym]?.chg;
+    if(metalCode && goldData[metalCode]){
+      price = goldData[metalCode].price;
+      chg = goldData[metalCode].chg;
+    }
+    return {
+      sym,
+      name,
+      price: price != null ? '$' + fmt(price,2) : '—',
+      chg: chg ?? null
+    };
+  });
+
+  renderAssetRows('comms', rows);
+}
+
+function renderCrypto(data){
+  if(!Array.isArray(data) || !data.length){
+    document.getElementById('crypto').innerHTML = `<div class="err-msg">Crypto feed unavailable</div>`;
+    return;
+  }
+  const rows = data.map(c => ({
+    sym: (c.symbol || '').toUpperCase(),
+    name: c.name || 'Crypto',
+    price: c.current_price != null ? '$' + fmt(c.current_price,2) : '—',
+    chg: c.price_change_percentage_24h ?? null
+  }));
+  renderAssetRows('crypto', rows);
+}
+
+function renderForex(rates){
+  const pairs = [
+    ['EUR','USD/EUR'], ['GBP','USD/GBP'], ['JPY','USD/JPY'], ['CHF','USD/CHF'],
+    ['AUD','USD/AUD'], ['CAD','USD/CAD'], ['CNY','USD/CNY']
+  ];
+  const rows = pairs.map(([code,name]) => ({
+    sym: code,
+    name,
+    price: rates[code] != null ? fmt(rates[code],4) : '—',
+    chg: null
+  }));
+  renderAssetRows('forex', rows);
+}
+
+function renderHeatmap(data){
+  const el = document.getElementById('hm');
+  el.innerHTML = SECTORS.map(([sym,label]) => {
+    const chg = data[sym]?.chg ?? 0;
+    const abs = Math.min(Math.abs(chg), 4);
+    const bg = chg >= 0
+      ? `rgba(0,230,118,${0.15 + abs*0.12})`
+      : `rgba(255,61,87,${0.15 + abs*0.12})`;
+    return `
+      <div class="hc" style="background:${bg}">
+        <div class="hs">${label}</div>
+        <div class="hp">${chg >= 0 ? '+' : ''}${Number(chg).toFixed(2)}%</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderBonds(data){
+  const el = document.getElementById('bonds');
+  el.innerHTML = BONDS.map(([sym,label]) => {
+    const q = data[sym];
+    const c = ci(q?.chg);
+    return `
+      <div class="bc">
+        <div class="bl">${label}</div>
+        <div class="bv">${q?.price ? '$' + fmt(q.price,2) : '—'}</div>
+        <div class="bch ${c.c}">${c.t}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderFutures(data){
+  const el = document.getElementById('futStrip');
+  el.innerHTML = FUTURES.map(([sym,label]) => {
+    const q = data[sym];
+    const chg = q?.chg ?? null;
+    const up = (chg ?? 0) >= 0;
+    const cls = chg == null ? 'nu-name' : up ? 'up-name' : 'dn-name';
+    const cc = ci(chg);
+    const extra = label === 'VIX' ? ' vix-card' : '';
+    return `
+      <div class="fut-card${extra}">
+        <div class="fut-hdr">
+          <div class="fut-name ${cls}">${label}</div>
+          <div class="fut-chg ${cc.c}">${cc.t}</div>
+        </div>
+        <div class="fut-row2">
+          <div class="fut-price">${q?.price ? fmt(q.price,2) : '—'}</div>
+          <div class="fut-pct ${cc.c}">${cc.t}</div>
+        </div>
+        <div>${miniChart(up)}</div>
+      </div>
+    `;
+  }).join('');
+}
+
+function renderFearGreed(fg){
+  const val = fg?.value ?? 50;
+  const label = fg?.label ?? 'NEUTRAL';
+  document.getElementById('fgn').textContent = val;
+  document.getElementById('fgl').textContent = label;
+  document.getElementById('fgneedle').style.left = `calc(${val}% - 2px)`;
+
+  const deg = -90 + (val/100) * 180;
+  document.getElementById('ndl').style.transform = `rotate(${deg}deg)`;
+}
+
+function classifyNewsItem(item){
+  const text = `${item.headline || ''} ${item.summary || ''}`.toLowerCase();
+  for(const [cat, words] of Object.entries(NEWS_KEYWORDS)){
+    if(words.some(w => text.includes(w))) return cat;
+  }
+  return 'business';
+}
+
+function filteredNews(feed){
+  if(feed === 'markets'){
+    return allNews.filter(n => ['markets','business','economics'].includes(n._cat));
+  }
+  return allNews.filter(n => n._cat === feed);
+}
+
+function renderNews(feed){
+  const el = document.getElementById('news');
+
+  if(!FINNHUB_KEY){
+    el.innerHTML = `<div class="news-feed-err">Add a Finnhub API key to load live news.</div>`;
+    return;
+  }
+
+  const items = filteredNews(feed).slice(0, 20);
+
+  if(!items.length){
+    el.innerHTML = `<div class="news-feed-err">No articles found for this feed right now.</div>`;
+    return;
+  }
+
+  el.innerHTML = items.map(n => `
+    <div class="news-item">
+      <a href="${n.url || '#'}" target="_blank" rel="noopener noreferrer">
+        <div class="news-hl">${n.headline || 'Untitled story'}</div>
+        <div class="news-meta">
+          <span class="news-src">${n.source || 'NEWS'}</span>
+          <span class="news-time">${n.datetime ? timeAgo(n.datetime) : ''}</span>
+          <span class="news-cat ${n._cat}">${n._cat.toUpperCase()}</span>
+        </div>
+      </a>
+    </div>
+  `).join('');
+}
+
+function switchNewsFeed(feed, btn){
+  currentNewsFeed = feed;
+  document.querySelectorAll('.ntab').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderNews(feed);
+}
+
+function updateTickerFromData(stockData, cryptoData, goldData, bondData){
+  const arr = [];
+
+  ['SPY','QQQ','DIA','IWM'].forEach(sym => {
+    if(stockData[sym]){
+      arr.push({ sym, price:'$' + fmt(stockData[sym].price,2), chg:stockData[sym].chg });
+    }
+  });
+
+  if(goldData.XAU) arr.push({ sym:'GOLD', price:'$' + fmt(goldData.XAU.price,2), chg:goldData.XAU.chg });
+  if(Array.isArray(cryptoData)){
+    const btc = cryptoData.find(x => x.id === 'bitcoin');
+    const eth = cryptoData.find(x => x.id === 'ethereum');
+    if(btc) arr.push({ sym:'BTC', price:'$' + fmt(btc.current_price,2), chg:btc.price_change_percentage_24h });
+    if(eth) arr.push({ sym:'ETH', price:'$' + fmt(eth.current_price,2), chg:eth.price_change_percentage_24h });
+  }
+  if(bondData.TLT) arr.push({ sym:'TLT', price:'$' + fmt(bondData.TLT.price,2), chg:bondData.TLT.chg });
+
+  tkBuf = arr;
+  buildTicker();
+}
+
+async function refreshAll(){
+  const btn = document.getElementById('rbtn');
+  btn.innerHTML = '<span class="spin">⟳</span> REFRESHING';
+  btn.disabled = true;
+
+  try{
+    const stockSymbols = [...new Set([
+      ...STOCKS.map(x => x[0]),
+      ...COMMODITY_ETFS.map(x => x[0]),
+      ...BONDS.map(x => x[0]),
+      ...FUTURES.map(x => x[0]),
+      ...SECTORS.map(x => x[0])
+    ])];
+
+    const [finnhubData, goldData, cryptoData, forexData, fgData, newsData] = await Promise.all([
+      fetchFinnhubBatch(stockSymbols),
+      fetchGoldApi(),
+      fetchCrypto(),
+      fetchForex(),
+      fetchFG(),
+      fetchNews()
+    ]);
+
+    renderStocks(finnhubData);
+    renderCommodities(goldData, finnhubData);
+    renderCrypto(cryptoData);
+    renderForex(forexData);
+    renderFearGreed(fgData);
+    renderBonds(finnhubData);
+    renderFutures(finnhubData);
+    renderHeatmap(finnhubData);
+    updateTickerFromData(finnhubData, cryptoData, goldData, finnhubData);
+
+    allNews = (newsData || []).map(n => ({ ...n, _cat: classifyNewsItem(n) }));
+    renderNews(currentNewsFeed);
+
+    document.getElementById('lastUp').textContent = 'Last update: ' + new Date().toLocaleTimeString('en-US');
+  }catch(e){
+    console.error(e);
+    document.getElementById('lastUp').textContent = 'Last update failed';
+  }finally{
+    btn.innerHTML = '⟳ REFRESH';
+    btn.disabled = false;
+  }
+}
+
+loadApiKey();
+refreshAll();
+setInterval(refreshAll, 60000);
+</script>
+</body>
+</html>
