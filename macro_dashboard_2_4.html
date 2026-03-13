@@ -15,7 +15,6 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);color:var(--text);font-family:'IBM Plex Mono',monospace;font-size:13px;min-height:100vh;}
-
 /* ── HEADER ── */
 header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;}
 .logo{font-family:'Barlow Condensed',sans-serif;font-size:30px;font-weight:900;letter-spacing:5px;color:var(--accent);text-shadow:0 0 28px rgba(0,212,255,.5);}
@@ -29,7 +28,6 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .rbtn:hover{border-color:var(--accent);color:var(--accent);}
 .spin{display:inline-block;animation:rot 1s linear infinite;}
 @keyframes rot{to{transform:rotate(360deg)}}
-
 /* ── API KEY ── */
 .api-setup{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 24px;display:flex;align-items:center;gap:12px;font-size:11px;flex-wrap:wrap;}
 .api-setup label{color:var(--text2);letter-spacing:1px;}
@@ -42,7 +40,6 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .api-status{font-size:10px;padding:2px 8px;border-radius:3px;letter-spacing:1px;}
 .api-ok{color:var(--green);background:rgba(0,230,118,.08);}
 .api-missing{color:var(--orange);background:rgba(255,140,0,.08);}
-
 /* ── TICKER ── */
 .tk-wrap{background:var(--bg3);border-bottom:1px solid var(--border);padding:8px 0;overflow:hidden;position:relative;}
 .tk-wrap::before,.tk-wrap::after{content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;}
@@ -52,7 +49,6 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 @keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .ti{display:inline-flex;align-items:center;gap:8px;padding:0 22px;border-right:1px solid var(--border);font-size:12px;white-space:nowrap;}
 .ts{color:var(--accent);font-weight:700;}.tp{color:var(--text);}.up{color:var(--green);}.dn{color:var(--red);}.nu{color:var(--text2);}
-
 /* ── MACRO BAR ── */
 .mbar{display:grid;grid-template-columns:repeat(4,1fr);background:var(--bg2);border-bottom:2px solid var(--border);}
 .mc{padding:18px 26px;border-right:1px solid var(--border);}.mc:last-child{border-right:none;}
@@ -61,7 +57,6 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .ca{color:var(--accent);text-shadow:0 0 20px rgba(0,212,255,.3);}
 .cy{color:var(--yellow);}.cg{color:var(--green);}.cr{color:var(--red);}.ct{color:var(--text);}
 .mcs{font-size:10px;color:var(--text3);margin-top:5px;}
-
 /* ═══ BLOOMBERG FUTURES STRIP ═══ */
 .fut-strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:0;background:var(--bg2);border-bottom:2px solid var(--border);}
 .fut-card{padding:14px 16px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;transition:background .2s;}
@@ -78,17 +73,14 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .fut-pct{font-size:12px;font-weight:700;}
 .fut-chart{height:32px;display:flex;align-items:flex-end;gap:0;overflow:hidden;border-radius:2px;}
 .fut-chart canvas{width:100%;height:32px;}
-
 /* ═══ MAIN LAYOUT ═══ */
 .main-wrap{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;padding:18px;}
 .c2{grid-column:span 2;}.c3{grid-column:span 3;}
-
 /* ── PANEL ── */
 .pnl{background:var(--panel);border:1px solid var(--border);border-radius:3px;overflow:hidden;}
 .ph{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;}
 .pt{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;letter-spacing:3px;color:var(--accent);text-transform:uppercase;}
 .pb{font-size:10px;padding:2px 8px;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);color:var(--text2);letter-spacing:1px;border-radius:2px;}
-
 /* ── ASSET ROW ── */
 .ar{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(26,43,60,.8);gap:10px;min-height:48px;}
 .ar:last-child{border-bottom:none;}.ar:hover{background:rgba(0,212,255,.03);}
@@ -102,13 +94,11 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .abadge.nu{color:var(--text2);background:rgba(90,122,144,.07);}
 .spk{flex:0 0 50px;display:flex;align-items:flex-end;gap:2px;height:20px;}
 .sb{width:4px;border-radius:1px 1px 0 0;}
-
 /* ── HEATMAP ── */
 .hm{display:grid;grid-template-columns:repeat(5,1fr);gap:3px;padding:14px;}
 .hc{aspect-ratio:2.2;border-radius:3px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;}
 .hs{font-size:12px;font-weight:700;color:rgba(255,255,255,.9);}
 .hp{font-size:11px;color:rgba(255,255,255,.72);}
-
 /* ── BONDS ── */
 .bg{display:grid;grid-template-columns:1fr 1fr;}
 .bc{padding:18px 20px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);}
@@ -116,7 +106,6 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .bl{font-size:10px;color:var(--text3);letter-spacing:2px;margin-bottom:6px;}
 .bv{font-family:'Barlow Condensed',sans-serif;font-size:36px;font-weight:900;color:var(--text);}
 .bch{font-size:12px;margin-top:3px;}
-
 /* ── FEAR & GREED ── */
 .fgw{display:flex;flex-direction:column;align-items:center;padding:18px;gap:8px;}
 .fgn{font-family:'Barlow Condensed',sans-serif;font-size:72px;font-weight:900;line-height:1;}
@@ -124,7 +113,6 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .fgbar{width:88%;height:12px;border-radius:6px;overflow:hidden;background:linear-gradient(90deg,#ff3d57,#ff8c00,#ffd000,#7ec8e3,#00e676);position:relative;}
 .fgneedle{position:absolute;top:-4px;width:5px;height:20px;background:#fff;border-radius:3px;box-shadow:0 0 10px #fff;transition:left 1.2s cubic-bezier(.34,1.2,.64,1);}
 .fgends{width:88%;display:flex;justify-content:space-between;font-size:11px;}
-
 /* ═══ NEWS PANEL ═══ */
 .news-tabs{display:flex;overflow-x:hidden;gap:0;border-bottom:1px solid var(--border);background:var(--bg2);}
 .ntab{flex:1 1 0;padding:8px 6px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.8px;color:var(--text2);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;text-transform:uppercase;white-space:nowrap;text-align:center;overflow:hidden;text-overflow:ellipsis;}
@@ -151,7 +139,6 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .news-item a{text-decoration:none;color:inherit;}
 .news-loading{color:var(--text2);font-size:11px;padding:18px;text-align:center;letter-spacing:2px;}
 .news-feed-err{color:var(--orange);font-size:10px;padding:12px 18px;display:flex;align-items:center;gap:8px;}
-
 /* ── STATUS ── */
 .sbar{background:var(--bg2);border-top:1px solid var(--border);padding:8px 24px;display:flex;justify-content:space-between;font-size:10px;color:var(--text3);letter-spacing:.8px;}
 .err-msg{color:var(--orange);font-size:11px;padding:14px 18px;display:flex;align-items:center;gap:8px;}
@@ -160,7 +147,6 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 </style>
 </head>
 <body>
-
 <header>
   <div class="logo">MACRO<span>TERMINAL</span></div>
   <div class="hdr-r">
@@ -169,7 +155,6 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
     <button class="rbtn" id="rbtn" onclick="refreshAll()">⟳ REFRESH</button>
   </div>
 </header>
-
 <div class="api-setup">
   <label>FINNHUB KEY:</label>
   <input type="text" id="apiKeyInput" placeholder="paste your free API key" />
@@ -177,9 +162,7 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
   <span class="api-status api-missing" id="apiStatus">NO KEY</span>
   <span class="hint">Free → <a href="https://finnhub.io/register" target="_blank">finnhub.io/register</a> &nbsp;|&nbsp; Metals + Crypto + Forex work without any key</span>
 </div>
-
 <div class="tk-wrap"><div class="tk" id="tk"></div></div>
-
 <!-- MACRO BAR -->
 <div class="mbar">
   <div class="mc"><div class="mcl">FED FUNDS RATE</div><div class="mcv ca">4.25–4.50%</div><div class="mcs">Last changed Dec 2024</div></div>
@@ -187,31 +170,25 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
   <div class="mc"><div class="mcl">US UNEMPLOYMENT</div><div class="mcv cg">4.0%</div><div class="mcs">January 2025</div></div>
   <div class="mc"><div class="mcl">GOLD SPOT</div><div class="mcv ct" id="goldSpot">—</div><div class="mcs">XAU/USD per oz · live</div></div>
 </div>
-
 <!-- ═══ BLOOMBERG-STYLE FUTURES STRIP ═══ -->
 <div class="fut-strip" id="futStrip"></div>
-
 <!-- ═══ MAIN GRID ═══ -->
 <div class="main-wrap">
-
   <!-- STOCKS -->
   <div class="pnl">
     <div class="ph"><span class="pt">📈 Stocks</span><span class="pb">FINNHUB</span></div>
     <div id="stocks"><div class="ar"><div class="ldph" style="width:100%"></div></div></div>
   </div>
-
   <!-- COMMODITIES -->
   <div class="pnl">
     <div class="ph"><span class="pt">🛢 Commodities</span><span class="pb">GOLD-API + ETFs</span></div>
     <div id="comms"><div class="ar"><div class="ldph" style="width:100%"></div></div></div>
   </div>
-
   <!-- CRYPTO -->
   <div class="pnl">
     <div class="ph"><span class="pt">₿ Crypto</span><span class="pb">COINGECKO</span></div>
     <div id="crypto"><div class="ar"><div class="ldph" style="width:100%"></div></div></div>
   </div>
-
   <!-- TOP NEWS -->
   <div class="pnl c2">
     <div class="ph"><span class="pt">📰 Market News</span><span class="pb">FINNHUB + RSS LIVE</span></div>
@@ -228,19 +205,16 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
     </div>
     <div class="news-list" id="news"><div class="news-loading">⟳ LOADING BLOOMBERG FEED...</div></div>
   </div>
-
   <!-- FOREX -->
   <div class="pnl">
     <div class="ph"><span class="pt">💱 Forex</span><span class="pb">FRANKFURTER</span></div>
     <div id="forex"><div class="ar"><div class="ldph" style="width:100%"></div></div></div>
   </div>
-
   <!-- HEATMAP -->
   <div class="pnl c2">
     <div class="ph"><span class="pt">🔥 S&P Sector Heatmap</span><span class="pb">SECTOR ETFs</span></div>
     <div class="hm" id="hm"></div>
   </div>
-
   <!-- FEAR GREED -->
   <div class="pnl">
     <div class="ph"><span class="pt">😱 Sentiment</span><span class="pb">FEAR & GREED</span></div>
@@ -262,21 +236,17 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
       <div class="fgl" id="fgl">LOADING...</div>
     </div>
   </div>
-
   <!-- BONDS -->
   <div class="pnl c2">
     <div class="ph"><span class="pt">📋 Bond ETFs</span><span class="pb">FINNHUB</span></div>
     <div class="bg" id="bonds"><div class="bc"><div class="ldph" style="width:80px;height:38px"></div></div></div>
   </div>
-
 </div>
-
 <div class="sbar">
   <span>📡 Finnhub · Gold-API.com · CoinGecko · Frankfurter · Alternative.me</span>
   <span id="lastUp">Not yet loaded</span>
   <span>🔄 Auto-refresh 60s</span>
 </div>
-
 <script>
 // ═══════════════════════════════════════════════════════════════
 // API KEY
@@ -300,7 +270,6 @@ function saveApiKey(){
   refreshAll();
 }
 loadApiKey();
-
 // ═══════════════════════════════════════════════════════════════
 // HELPERS
 // ═══════════════════════════════════════════════════════════════
@@ -328,7 +297,6 @@ const sparkHTML=up=>{
   return vals.map(b=>`<div class="sb" style="height:${(b/mx)*20}px;background:${col}"></div>`).join('');
 };
 setInterval(()=>document.getElementById('clk').textContent=new Date().toUTCString().split(' ')[4]+' UTC',1000);
-
 let tkBuf=[];
 const buildTicker=()=>{
   const all=[...tkBuf,...tkBuf];
@@ -337,7 +305,6 @@ const buildTicker=()=>{
     return`<span class="ti"><span class="ts">${t.sym}</span><span class="tp">${t.price}</span><span class="${c.c}">${c.t}</span></span>`;
   }).join('');
 };
-
 // Generate mini sparkline SVG
 function miniChart(up,w=160,h=32){
   let pts=[];let y=h/2;
@@ -353,7 +320,6 @@ function miniChart(up,w=160,h=32){
   const p2=pts.slice(mid).join(' ');
   return`<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="display:block;width:100%"><polyline points="${p1}" fill="none" stroke="rgba(200,220,234,.5)" stroke-width="1.5"/><polyline points="${p2}" fill="none" stroke="${col}" stroke-width="2"/></svg>`;
 }
-
 function timeAgo(ts){
   const d=Date.now()/1000-ts;
   if(d<60)return'just now';
@@ -361,25 +327,21 @@ function timeAgo(ts){
   if(d<86400)return Math.floor(d/3600)+'h ago';
   return Math.floor(d/86400)+'d ago';
 }
-
 function stripHtml(s=''){
   return s
-    .replace(/<!\[CDATA\[|\]\]>/g,'')
+    .replace(/<!\\[CDATA\\[|\\]\\]>/g,'')
     .replace(/<[^>]*>/g,' ')
-    .replace(/\s+/g,' ')
+    .replace(/\\s+/g,' ')
     .trim();
 }
-
 async function fetchWithTimeout(url,ms=12000,as='json'){
   const res=await fetch(url,{signal:AbortSignal.timeout(ms),cache:'no-store'});
   if(!res.ok)throw new Error(`HTTP ${res.status}`);
   return as==='text'?res.text():res.json();
 }
-
 // ═══════════════════════════════════════════════════════════════
 // DATA SOURCES
 // ═══════════════════════════════════════════════════════════════
-
 // 1) FINNHUB
 async function finnhubQuote(sym){
   if(!FINNHUB_KEY)return null;
@@ -391,7 +353,6 @@ async function finnhubQuote(sym){
     return j;
   }catch(e){return null;}
 }
-
 async function fetchFinnhubBatch(symbols){
   const res={};
   const proms=symbols.map((sym,i)=>new Promise(resolve=>setTimeout(()=>{
@@ -403,7 +364,6 @@ async function fetchFinnhubBatch(symbols){
   await Promise.all(proms);
   return res;
 }
-
 // 2) GOLD-API.COM (metals — FREE, no key)
 async function fetchGoldApi(){
   const syms=['XAU','XAG','HG','XPT','XPD'];
@@ -416,14 +376,12 @@ async function fetchGoldApi(){
   ));
   return res;
 }
-
 // 3) COINGECKO
 async function fetchCrypto(){
   try{
     return await (await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,solana,ripple,cardano,dogecoin&order=market_cap_desc&per_page=7&sparkline=false&price_change_percentage=24h',{signal:AbortSignal.timeout(9000)})).json();
   }catch(e){return null;}
 }
-
 // 4) FRANKFURTER
 async function fetchForex(){
   let rates={};
@@ -431,14 +389,12 @@ async function fetchForex(){
     const j=await (await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,JPY,CHF,AUD,CAD,CNY',{signal:AbortSignal.timeout(8000)})).json();
     rates=j.rates||{};
   }catch(e){}
-
   const rubSources=[
     async()=>{const j=await (await fetch('https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/usd.json',{signal:AbortSignal.timeout(7000)})).json();return j?.usd?.rub||null;},
     async()=>{const j=await (await fetch('https://latest.currency-api.pages.dev/v1/currencies/usd.json',{signal:AbortSignal.timeout(7000)})).json();return j?.usd?.rub||null;},
     async()=>{const j=await (await fetch('https://open.er-api.com/v6/latest/USD',{signal:AbortSignal.timeout(7000)})).json();return j?.rates?.RUB||null;},
     async()=>{const j=await (await fetch('https://api.exchangerate-api.com/v4/latest/USD',{signal:AbortSignal.timeout(7000)})).json();return j?.rates?.RUB||null;},
   ];
-
   for(const src of rubSources){
     try{
       const rub=await src();
@@ -452,7 +408,6 @@ async function fetchForex(){
   }
   return rates;
 }
-
 // 5) FEAR & GREED
 async function fetchFG(){
   try{
@@ -461,7 +416,6 @@ async function fetchFG(){
     return null;
   }catch(e){return null;}
 }
-
 // 6) FINNHUB MARKET NEWS (fallback only)
 async function fetchNews(){
   if(!FINNHUB_KEY)return null;
@@ -471,390 +425,8 @@ async function fetchNews(){
     return await r.json();
   }catch(e){return null;}
 }
-
 // ═══════════════════════════════════════════════════════════════
-// NEWS FEEDS — Finnhub primary + RSS fallback
+// NEWS FEEDS — keyword-filtered Finnhub + RSS fallback
 // ═══════════════════════════════════════════════════════════════
-// Finnhub category mapping for each tab
 const FINNHUB_CATEGORIES={
-  markets:'general', economics:'general', politics:'general',
-  technology:'technology', wealth:'general', business:'general',
-  green:'general', opinion:'general', industries:'general',
-};
-// RSS fallback feeds per tab (multiple proxies tried in order)
-const RSS_FEEDS={
-  markets:   'https://feeds.content.dowjones.io/public/rss/mw_realtimeheadlines',
-  economics: 'https://feeds.content.dowjones.io/public/rss/mw_marketpulse',
-  politics:  'https://feeds.content.dowjones.io/public/rss/mw_topstories',
-  technology:'https://feeds.content.dowjones.io/public/rss/mw_technology',
-  wealth:    'https://feeds.content.dowjones.io/public/rss/mw_personalfinance',
-  business:  'https://feeds.content.dowjones.io/public/rss/mw_topstories',
-  green:     'https://feeds.content.dowjones.io/public/rss/mw_topstories',
-  opinion:   'https://feeds.content.dowjones.io/public/rss/mw_topstories',
-  industries:'https://feeds.content.dowjones.io/public/rss/mw_topstories',
-};
-const FEED_LABELS={
-  markets:'Markets',economics:'Economics',politics:'Politics',
-  technology:'Technology',wealth:'Wealth',business:'Business',
-  green:'Green',opinion:'Opinion',industries:'Industries',
-};
-const rssCache={};
-let activeNewsFeed='markets';
-
-function parseRSS(xml,label){
-  try{
-    const doc=new DOMParser().parseFromString(xml,'application/xml');
-    if(doc.querySelector('parsererror'))return null;
-    const items=[...doc.querySelectorAll('item')];
-    if(!items.length)return null;
-    return items.slice(0,20).map(item=>{
-      const title=stripHtml(item.querySelector('title')?.textContent||'');
-      const link=item.querySelector('link')?.textContent?.trim()||item.querySelector('guid')?.textContent?.trim()||'#';
-      const pub=item.querySelector('pubDate')?.textContent||'';
-      const ts=pub?new Date(pub).getTime()/1000:0;
-      return{headline:title,url:link,datetime:Number.isFinite(ts)?ts:0,source:'MarketWatch',category:label};
-    }).filter(x=>x.headline&&x.url&&x.url!=='#');
-  }catch(e){return null;}
-}
-
-async function fetchRSSFallback(feedKey){
-  const url=RSS_FEEDS[feedKey]||RSS_FEEDS.markets;
-  const label=FEED_LABELS[feedKey]||'News';
-  const proxies=[
-    async()=>{
-      const j=await fetchWithTimeout(`https://api.allorigins.win/get?url=${encodeURIComponent(url)}`,12000,'json');
-      const items=parseRSS(j.contents||'',label);
-      if(!items?.length)throw new Error('empty');
-      return items;
-    },
-    async()=>{
-      const xml=await fetchWithTimeout(`https://corsproxy.io/?${encodeURIComponent(url)}`,12000,'text');
-      const items=parseRSS(xml,label);
-      if(!items?.length)throw new Error('empty');
-      return items;
-    },
-    async()=>{
-      const j=await fetchWithTimeout(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(url)}&count=20`,12000,'json');
-      if(j.status!=='ok'||!j.items?.length)throw new Error('empty');
-      return j.items.map(i=>({
-        headline:stripHtml(i.title||''),url:i.link||i.guid||'#',
-        datetime:i.pubDate?new Date(i.pubDate).getTime()/1000:0,
-        source:'MarketWatch',category:label
-      })).filter(x=>x.headline&&x.url);
-    },
-  ];
-  for(const p of proxies){try{const r=await p();if(r?.length)return r;}catch(e){}}
-  return null;
-}
-
-async function fetchNewsFeed(feedKey,force=false){
-  const cacheMs=3*60*1000;
-  if(!force&&rssCache[feedKey]&&(Date.now()-rssCache[feedKey].ts)<cacheMs)return rssCache[feedKey].items;
-  const label=FEED_LABELS[feedKey]||'News';
-  // Primary: Finnhub news (no proxy needed, direct API)
-  if(FINNHUB_KEY){
-    try{
-      const cat=FINNHUB_CATEGORIES[feedKey]||'general';
-      const r=await fetch(`https://finnhub.io/api/v1/news?category=${cat}&token=${FINNHUB_KEY}`,{signal:AbortSignal.timeout(9000)});
-      if(r.ok){
-        const j=await r.json();
-        if(Array.isArray(j)&&j.length){
-          const items=j.slice(0,20).map(a=>({
-            headline:a.headline,url:a.url,datetime:a.datetime,
-            source:a.source||'Finnhub',category:label
-          })).filter(x=>x.headline&&x.url);
-          if(items.length){rssCache[feedKey]={items,ts:Date.now()};return items;}
-        }
-      }
-    }catch(e){}
-  }
-  // Fallback: RSS via proxies
-  const rssItems=await fetchRSSFallback(feedKey);
-  if(rssItems?.length){rssCache[feedKey]={items:rssItems,ts:Date.now()};return rssItems;}
-  return null;
-}
-
-function renderNewsItems(articles,feedKey){
-  const label=FEED_LABELS[feedKey||activeNewsFeed]||'News';
-  const el=document.getElementById('news');
-  if(!articles||!articles.length){
-    el.innerHTML=`<div class="news-feed-err">
-      ⚠ ${label} feed could not load
-      <button onclick="switchNewsFeed('${feedKey||activeNewsFeed}',null,true)"
-        style="background:rgba(0,212,255,.12);border:1px solid rgba(0,212,255,.3);
-        color:var(--accent);font-family:'IBM Plex Mono',monospace;font-size:10px;
-        padding:3px 10px;cursor:pointer;border-radius:3px;letter-spacing:1px;margin-left:8px">
-        ⟳ RETRY</button></div>`;
-    return;
-  }
-  el.innerHTML=articles.slice(0,20).map(a=>{
-    const ts=a.datetime&&a.datetime>1000?timeAgo(a.datetime):'';
-    const srcCls=feedKey||activeNewsFeed;
-    return`<div class="news-item">
-      <a href="${a.url||'#'}" target="_blank" rel="noopener">
-        <div class="news-hl">${a.headline||'Untitled'}</div>
-        <div class="news-meta">
-          <span class="news-src">${a.source||'News'}</span>
-          <span class="news-time">${ts}</span>
-          <span class="news-cat ${srcCls}">${a.category||label}</span>
-        </div>
-      </a>
-    </div>`;
-  }).join('');
-}
-
-async function switchNewsFeed(feedKey,btn=null,force=false){
-  activeNewsFeed=feedKey;
-  document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('active'));
-  const activeBtn=btn||document.querySelector(`.ntab[data-feed="${feedKey}"]`);
-  if(activeBtn)activeBtn.classList.add('active');
-  document.getElementById('news').innerHTML=`<div class="news-loading">
-    <span class="spin" style="display:inline-block;animation:rot 1s linear infinite">⟳</span>
-    FETCHING ${(FEED_LABELS[feedKey]||feedKey).toUpperCase()} FEED...</div>`;
-  const items=await fetchNewsFeed(feedKey,force);
-  renderNewsItems(items,feedKey);
-}
-
-async function loadInitialNews(force=false){
-  const items=await fetchNewsFeed(activeNewsFeed,force);
-  renderNewsItems(items,activeNewsFeed);
-}
-
-
-// ═══════════════════════════════════════════════════════════════
-// DEFINITIONS
-// ═══════════════════════════════════════════════════════════════
-const FUTURES=[
-  {sym:'SPY', n:'S&P FUT',  short:'S&P'},
-  {sym:'DIA', n:'DOW FUT',  short:'DOW'},
-  {sym:'USO', n:'NYMEX FUT',short:'OIL'},
-  {sym:'UNG', n:'NAT GAS FUT',short:'GAS'},
-  {sym:'GLD', n:'GOLD FUT', short:'GOLD'},
-];
-
-const STOCKS=[
-  {sym:'SPY',n:'S&P 500',d:'SPY ETF'},{sym:'QQQ',n:'NASDAQ 100',d:'QQQ ETF'},
-  {sym:'DIA',n:'DOW JONES',d:'DIA ETF'},{sym:'IWM',n:'RUSSELL 2000',d:'IWM ETF'},
-  {sym:'XOM',n:'EXXON',d:'ExxonMobil'},
-  {sym:'EWI',n:'MILAN FTSE MIB',d:'Italy (EWI)'},{sym:'EWQ',n:'CAC 40 PARIS',d:'France (EWQ)'},
-  {sym:'EWG',n:'DAX GERMANY',d:'Germany (EWG)'},
-  {sym:'EFA',n:'INTL DEVELOPED',d:'EFA ETF'},{sym:'EEM',n:'EMERGING MKT',d:'EEM ETF'},
-  {sym:'EWJ',n:'JAPAN NIKKEI',d:'Japan (EWJ)'},
-];
-const COMMS_METALS=[
-  {sym:'XAU',n:'GOLD',d:'XAU/USD oz',e:'🥇'},{sym:'XAG',n:'SILVER',d:'XAG/USD oz',e:'🥈'},
-  {sym:'HG',n:'COPPER',d:'per lb',e:'🔶'},{sym:'XPT',n:'PLATINUM',d:'XPT/USD oz',e:'⚪'},
-  {sym:'XPD',n:'PALLADIUM',d:'XPD/USD oz',e:'◆'},
-];
-const COMMS_ETFS=[
-  {sym:'USO',n:'CRUDE OIL',d:'WTI (USO)',e:'🛢'},{sym:'BNO',n:'BRENT OIL',d:'Brent (BNO)',e:'🛢'},{sym:'UNG',n:'NAT GAS',d:'Henry Hub (UNG)',e:'🔥'},
-  {sym:'WEAT',n:'WHEAT',d:'CBOT (WEAT)',e:'🌾'},{sym:'CORN',n:'CORN',d:'CBOT (CORN)',e:'🌽'},
-];
-const BOND_DEFS=[
-  {sym:'SHV',n:'US SHORT TERM',d:'0-1 Year (SHV)'},{sym:'SHY',n:'US 1-3 YEAR',d:'Treasury (SHY)'},
-  {sym:'IEF',n:'US 7-10 YEAR',d:'Treasury (IEF)'},{sym:'TLT',n:'US 20+ YEAR',d:'Long Bond (TLT)'},
-];
-const SECTOR_ETFS=[
-  {sym:'XLK',n:'TECH'},{sym:'XLF',n:'FINANCE'},{sym:'XLV',n:'HEALTH'},{sym:'XLE',n:'ENERGY'},{sym:'XLI',n:'INDUSTRIAL'},
-  {sym:'XLC',n:'COMM'},{sym:'XLY',n:'CONSUMER'},{sym:'XLP',n:'STAPLES'},{sym:'XLRE',n:'REAL EST'},{sym:'XLU',n:'UTILITIES'},
-];
-
-// ═══════════════════════════════════════════════════════════════
-// RENDER
-// ═══════════════════════════════════════════════════════════════
-
-// Bloomberg Futures Strip
-function renderFutures(data){
-  if(!FINNHUB_KEY||!Object.keys(data).length){
-    document.getElementById('futStrip').innerHTML=FUTURES.map(f=>`<div class="fut-card"><div class="fut-hdr"><span class="fut-name nu-name">${f.n}</span><span class="fut-chg nu">—</span></div><div class="fut-row2"><span class="fut-price">—</span><span class="fut-pct nu">—</span></div><div class="fut-chart">${miniChart(true)}</div></div>`).join('');
-    return;
-  }
-  document.getElementById('futStrip').innerHTML=FUTURES.map(f=>{
-    const d=data[f.sym];
-    if(!d) return`<div class="fut-card"><div class="fut-hdr"><span class="fut-name nu-name">${f.n}</span></div><div class="fut-row2"><span class="fut-price">—</span></div><div class="fut-chart">${miniChart(true)}</div></div>`;
-    const up=d.chg>=0;
-    const chgVal=d.change!=null?d.change:0;
-    const sign=chgVal>=0?'+':'';
-    const vixCls=f.isVix?' vix-card':'';
-    const nameCls=up?'up-name':'dn-name';
-    const chgCls=up?'up':'dn';
-    return`<div class="fut-card${vixCls}">
-      <div class="fut-hdr">
-        <span class="fut-name ${nameCls}">${f.n}</span>
-        <span class="fut-chg ${chgCls}">${sign}${chgVal.toFixed(2)}</span>
-      </div>
-      <div class="fut-row2">
-        <span class="fut-price">${fmt(d.price,2)}</span>
-        <span class="fut-pct ${chgCls}">${d.chg>=0?'+':''}${d.chg.toFixed(2)}%</span>
-      </div>
-      <div class="fut-chart">${miniChart(up)}</div>
-    </div>`;
-  }).join('');
-}
-
-function makeRow(n,d,e,price,chg,pfx='$',dec=2,sym=''){
-  const p=price!=null?`${pfx}${fmt(price,dec)}`:'—';
-  const c=ci(chg);
-  const sp=price!=null?`<div class="spk">${sparkHTML(chg>=0)}</div>`:'<div class="spk"></div>';
-  const link=sym?`https://www.tradingview.com/symbols/${sym}/`:'';
-  const openTag=sym?`<a href="${link}" target="_blank" rel="noopener" style="text-decoration:none;color:inherit;display:flex;align-items:center;justify-content:space-between;width:100%;gap:10px">`:'';
-  const closeTag=sym?'</a>':'';
-  return`<div class="ar" ${sym?'style="cursor:pointer"':''}>${openTag}<div class="al"><div class="an">${e||''}${n}</div><div class="ad">${d}</div></div><div class="aprx">${p}</div><div class="abadge ${c.c}">${c.t}</div>${sp}${closeTag}</div>`;
-}
-
-function renderStocks(data){
-  if(!FINNHUB_KEY){document.getElementById('stocks').innerHTML='<div class="err-msg">⚠ Enter Finnhub API key to load stocks</div>';return;}
-  if(!STOCKS.some(s=>data[s.sym])){document.getElementById('stocks').innerHTML='<div class="err-msg">⚠ No stock data — check API key or refresh</div>';return;}
-  document.getElementById('stocks').innerHTML=STOCKS.map(s=>{
-    const d=data[s.sym];
-    if(d)tkBuf.push({sym:s.n,price:`$${fmt(d.price)}`,chg:d.chg});
-    return makeRow(s.n,s.d,'',d?.price,d?.chg,'$',2,s.sym);
-  }).join('');
-}
-
-function renderComms(metalData,etfData){
-  let html=COMMS_METALS.map(s=>{
-    const d=metalData[s.sym];
-    if(d)tkBuf.push({sym:s.n,price:`$${fmt(d.price)}`,chg:d.chg});
-    return makeRow(s.n,s.d,s.e,d?.price,d?.chg);
-  }).join('');
-  if(FINNHUB_KEY) html+=COMMS_ETFS.map(s=>{
-    const d=etfData[s.sym];
-    if(d)tkBuf.push({sym:s.n,price:`$${fmt(d.price)}`,chg:d.chg});
-    return makeRow(s.n,s.d,s.e,d?.price,d?.chg);
-  }).join('');
-  document.getElementById('comms').innerHTML=html||'<div class="err-msg">⚠ Commodity data unavailable</div>';
-}
-
-function renderBonds(data){
-  if(!FINNHUB_KEY){document.getElementById('bonds').innerHTML='<div class="bc"><div class="err-msg">⚠ Enter Finnhub key for bonds</div></div>';return;}
-  document.getElementById('bonds').innerHTML=BOND_DEFS.map(b=>{
-    const d=data[b.sym];
-    return`<div class="bc"><div class="bl">${b.n} · ${b.d}</div><div class="bv">${d?`$${fmt(d.price,2)}`:'—'}</div><div class="bch ${d?ci(d.chg).c:'nu'}">${d?ci(d.chg).t:'—'}</div></div>`;
-  }).join('');
-}
-
-function renderCrypto(coins){
-  if(!coins||!Array.isArray(coins)){document.getElementById('crypto').innerHTML='<div class="err-msg">⚠ CoinGecko unavailable</div>';return;}
-  const ic={bitcoin:'₿',ethereum:'Ξ',binancecoin:'BNB',solana:'◎',ripple:'XRP',cardano:'₳',dogecoin:'Ð'};
-  document.getElementById('crypto').innerHTML=coins.map(c=>{
-    const chg=c.price_change_percentage_24h||0;
-    const cl=chg>=0?'up':'dn';
-    tkBuf.push({sym:c.symbol.toUpperCase(),price:`$${fmt(c.current_price)}`,chg});
-    return`<div class="ar"><div class="al"><div class="an">${ic[c.id]||''} ${c.symbol.toUpperCase()}</div><div class="ad">${c.name}</div></div><div class="aprx">$${fmt(c.current_price)}</div><div class="abadge ${cl}">${chg>=0?'+':''}${chg.toFixed(2)}%</div><div class="spk">${sparkHTML(chg>=0)}</div></div>`;
-  }).join('');
-}
-
-function renderForex(rates){
-  const P=[{k:'EUR',inv:1,n:'EUR/USD',d:'Euro / Dollar'},{k:'GBP',inv:1,n:'GBP/USD',d:'Pound / Dollar'},{k:'JPY',inv:0,n:'USD/JPY',d:'Dollar / Yen'},{k:'CHF',inv:0,n:'USD/CHF',d:'Dollar / Franc'},{k:'RUB',inv:0,n:'USD/RUB',d:'Dollar / Russian Ruble'},{k:'EURRUB',inv:0,n:'EUR/RUB',d:'Euro / Russian Ruble'},{k:'CNY',inv:0,n:'USD/CNY',d:'Dollar / Yuan'},{k:'AUD',inv:1,n:'AUD/USD',d:'Aussie / Dollar'},{k:'CAD',inv:0,n:'USD/CAD',d:'Dollar / Loonie'}];
-  if(!rates||!Object.keys(rates).length){document.getElementById('forex').innerHTML='<div class="err-msg">⚠ Forex unavailable</div>';return;}
-  document.getElementById('forex').innerHTML=P.map(p=>{
-    const raw=rates[p.k];
-    if(!raw)return'';
-    const price=p.inv?+(1/raw).toFixed(4):+raw.toFixed(4);
-    const chg=(Math.random()-0.49)*0.8;
-    const c=ci(chg);
-    tkBuf.push({sym:p.n,price:price.toFixed(4),chg});
-    return`<div class="ar"><div class="al"><div class="an">${p.n}</div><div class="ad">${p.d}</div></div><div class="aprx">${price.toFixed(4)}</div><div class="abadge ${c.c}">${c.t}</div><div class="spk">${sparkHTML(chg>=0)}</div></div>`;
-  }).join('');
-}
-
-function renderHeatmap(sdata){
-  document.getElementById('hm').innerHTML=SECTOR_ETFS.map(s=>{
-    const d=sdata[s.sym];
-    const chg=d?d.chg:(Math.random()-0.5)*2.5;
-    const abs=Math.abs(chg),int=Math.min(abs/3,1);
-    const bg=chg>=0?`rgb(${Math.round(10*(1-int))},${Math.round(80+int*150)},${Math.round(50+int*30)})`:`rgb(${Math.round(120+int*120)},${Math.round(10*(1-int))},${Math.round(20+int*30)})`;
-    return`<div class="hc" style="background:${bg}"><div class="hs">${s.n}</div><div class="hp">${chg>=0?'+':''}${chg.toFixed(1)}%</div></div>`;
-  }).join('');
-}
-
-function renderFG(fg){
-  let val,lbl;
-  if(fg){val=fg.value;lbl=fg.label;}
-  else{
-    val=Math.round(40+Math.random()*30);
-    lbl=val<=25?'EXTREME FEAR':val<=45?'FEAR':val<=55?'NEUTRAL':val<=75?'GREED':'EXTREME GREED';
-  }
-  document.getElementById('fgn').textContent=val;
-  document.getElementById('ndl').style.transform=`rotate(${-90+(val/100)*180}deg)`;
-  document.getElementById('fgneedle').style.left=`calc(${val}% - 2.5px)`;
-  const col=val<=25?'var(--red)':val<=45?'var(--orange)':val<=55?'var(--yellow)':val<=75?'#7ec8e3':'var(--green)';
-  document.getElementById('fgn').style.color=col;
-  document.getElementById('fgl').textContent=lbl;
-  document.getElementById('fgl').style.color=col;
-}
-
-// old generic news renderer kept separate, not used by Bloomberg
-function renderGenericNews(articles){
-  if(!articles||!articles.length){
-    document.getElementById('news').innerHTML=FINNHUB_KEY
-      ?'<div class="err-msg">⚠ No news available — try refreshing</div>'
-      :'<div class="err-msg">⚠ Enter Finnhub API key to load market news</div>';
-    return;
-  }
-  document.getElementById('news').innerHTML=articles.slice(0,15).map(a=>{
-    const ts=a.datetime?timeAgo(a.datetime):'';
-    const cat=a.category||'general';
-    return`<div class="news-item"><a href="${a.url||'#'}" target="_blank" rel="noopener">
-      <div class="news-hl">${a.headline||'Untitled'}</div>
-      <div class="news-meta">
-        <span class="news-src">${a.source||'—'}</span>
-        <span class="news-time">${ts}</span>
-        <span class="news-cat">${cat.toUpperCase()}</span>
-      </div>
-    </a></div>`;
-  }).join('');
-}
-
-// ═══════════════════════════════════════════════════════════════
-// MAIN REFRESH
-// ═══════════════════════════════════════════════════════════════
-let busy=false;
-async function refreshAll(){
-  if(busy)return;
-  busy=true;
-  tkBuf=[];
-  document.getElementById('rbtn').innerHTML='<span class="spin">⟳</span> LOADING';
-
-  try{
-    const finnSymSet=new Set();
-    [...FUTURES,...STOCKS,...COMMS_ETFS,...BOND_DEFS,...SECTOR_ETFS].forEach(s=>finnSymSet.add(s.sym));
-    const finnSyms=[...finnSymSet];
-
-    const[finnData,metalData,cryptoData,fxRates,fgData]=await Promise.all([
-      FINNHUB_KEY?fetchFinnhubBatch(finnSyms):Promise.resolve({}),
-      fetchGoldApi(),
-      fetchCrypto(),
-      fetchForex(),
-      fetchFG(),
-    ]);
-
-    if(metalData.XAU){
-      document.getElementById('goldSpot').textContent=`$${fmt(metalData.XAU.price,0)}`;
-      document.getElementById('goldSpot').className=`mcv ${metalData.XAU.chg>=0?'cg':'cr'}`;
-    }
-
-    renderFutures(finnData);
-    renderStocks(finnData);
-    renderComms(metalData,finnData);
-    renderBonds(finnData);
-    renderCrypto(cryptoData);
-    renderForex(fxRates);
-    renderHeatmap(finnData);
-    renderFG(fgData);
-    buildTicker();
-    await loadInitialNews(true);
-
-    document.getElementById('lastUp').textContent='⏱ '+new Date().toLocaleTimeString()+' local';
-  } finally {
-    document.getElementById('rbtn').innerHTML='⟳ REFRESH';
-    busy=false;
-  }
-}
-
-setInterval(refreshAll,60000);
-refreshAll();
-</script>
-</body>
-</html>
+  markets:'general', economics:'general', politics
