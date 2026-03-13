@@ -25,6 +25,7 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 #clk{font-size:12px;color:var(--text2);}
 .rbtn{background:none;border:1px solid var(--border2);color:var(--text2);font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 14px;cursor:pointer;border-radius:3px;letter-spacing:1px;transition:all .2s;}
 .rbtn:hover{border-color:var(--accent);color:var(--accent);}
+.rbtn:disabled{opacity:.7;cursor:not-allowed;}
 .spin{display:inline-block;animation:rot 1s linear infinite;}
 @keyframes rot{to{transform:rotate(360deg)}}
 
@@ -88,12 +89,15 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .pt{font-family:'Barlow Condensed',sans-serif;font-size:17px;font-weight:700;letter-spacing:3px;color:var(--accent);text-transform:uppercase;}
 .pb{font-size:10px;padding:2px 8px;background:rgba(0,212,255,.07);border:1px solid rgba(0,212,255,.18);color:var(--text2);letter-spacing:1px;border-radius:2px;}
 
+.afh{padding:8px 18px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid rgba(26,43,60,.7);font-size:10px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;font-weight:700;}
+.afh:first-child{border-top:none;}
+
 .ar{display:flex;align-items:center;justify-content:space-between;padding:10px 18px;border-bottom:1px solid rgba(26,43,60,.8);gap:10px;min-height:48px;}
 .ar:last-child{border-bottom:none;}
 .ar:hover{background:rgba(0,212,255,.03);}
-.al{flex:0 0 auto;width:125px;}
+.al{flex:0 0 auto;width:150px;}
 .an{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.ad{font-size:13px;color:var(--text);white-space:nowrap;margin-top:1px;}
+.ad{font-size:12px;color:var(--text2);white-space:nowrap;margin-top:1px;}
 .aprx{flex:1 1 auto;font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:700;color:var(--text);text-align:right;white-space:nowrap;}
 .abadge{flex:0 0 78px;font-size:11px;font-weight:700;text-align:center;padding:3px 6px;border-radius:3px;white-space:nowrap;}
 .abadge.up{color:var(--green);background:rgba(0,230,118,.09);}
@@ -123,7 +127,7 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .fgends{width:88%;display:flex;justify-content:space-between;font-size:11px;}
 
 .news-tabs{display:flex;overflow-x:hidden;gap:0;border-bottom:1px solid var(--border);background:var(--bg2);}
-.ntab{flex:1 1 0;padding:8px 6px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:0.8px;color:var(--text2);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;text-transform:uppercase;white-space:nowrap;text-align:center;overflow:hidden;text-overflow:ellipsis;}
+.ntab{flex:1 1 0;padding:8px 6px;font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.8px;color:var(--text2);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;transition:all .15s;text-transform:uppercase;white-space:nowrap;text-align:center;overflow:hidden;text-overflow:ellipsis;}
 .ntab:hover{color:var(--text);background:rgba(0,212,255,.04);}
 .ntab.active{color:var(--accent);border-bottom:2px solid var(--accent);background:rgba(0,212,255,.06);}
 .news-list{max-height:380px;overflow-y:auto;scrollbar-width:thin;scrollbar-color:var(--border) transparent;}
@@ -148,7 +152,7 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
 .news-loading{color:var(--text2);font-size:11px;padding:18px;text-align:center;letter-spacing:2px;}
 .news-feed-err{color:var(--orange);font-size:10px;padding:12px 18px;display:flex;align-items:center;gap:8px;}
 
-.sbar{background:var(--bg2);border-top:1px solid var(--border);padding:8px 24px;display:flex;justify-content:space-between;font-size:10px;color:var(--text3);letter-spacing:.8px;}
+.sbar{background:var(--bg2);border-top:1px solid var(--border);padding:8px 24px;display:flex;justify-content:space-between;font-size:10px;color:var(--text3);letter-spacing:.8px;gap:14px;flex-wrap:wrap;}
 .err-msg{color:var(--orange);font-size:11px;padding:14px 18px;display:flex;align-items:center;gap:8px;}
 .ldph{height:14px;border-radius:3px;background:linear-gradient(90deg,var(--panel) 25%,var(--bg3) 50%,var(--panel) 75%);background-size:200% 100%;animation:shim 1.5s infinite;}
 @keyframes shim{0%{background-position:200% 0}100%{background-position:-200% 0}}
@@ -181,15 +185,15 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
   <input type="text" id="apiKeyInput" placeholder="paste your free API key" />
   <button onclick="saveApiKey()">SAVE & RELOAD</button>
   <span class="api-status api-missing" id="apiStatus">NO KEY</span>
-  <span class="hint">Free → <a href="https://finnhub.io/register" target="_blank">finnhub.io/register</a> &nbsp;|&nbsp; Metals + Crypto + Forex work without any key</span>
+  <span class="hint">Free → <a href="https://finnhub.io/register" target="_blank">finnhub.io/register</a> &nbsp;|&nbsp; Spot metals work without a key</span>
 </div>
 
 <div class="tk-wrap"><div class="tk" id="tk"></div></div>
 
 <div class="mbar">
-  <div class="mc"><div class="mcl">FED FUNDS RATE</div><div class="mcv ca">4.25–4.50%</div><div class="mcs">Last changed Dec 2024</div></div>
-  <div class="mc"><div class="mcl">US CPI INFLATION</div><div class="mcv cy">2.9%</div><div class="mcs">January 2025 · YoY</div></div>
-  <div class="mc"><div class="mcl">US UNEMPLOYMENT</div><div class="mcv cg">4.0%</div><div class="mcs">January 2025</div></div>
+  <div class="mc"><div class="mcl">FED FUNDS RATE</div><div class="mcv ca">4.25–4.50%</div><div class="mcs">Static macro card</div></div>
+  <div class="mc"><div class="mcl">US CPI INFLATION</div><div class="mcv cy">2.9%</div><div class="mcs">Static macro card</div></div>
+  <div class="mc"><div class="mcl">US UNEMPLOYMENT</div><div class="mcv cg">4.0%</div><div class="mcs">Static macro card</div></div>
   <div class="mc"><div class="mcl">GOLD SPOT</div><div class="mcv ct" id="goldSpot">—</div><div class="mcs">XAU/USD per oz · live</div></div>
 </div>
 
@@ -202,7 +206,7 @@ header{background:var(--bg2);border-bottom:2px solid var(--border);padding:14px 
   </div>
 
   <div class="pnl">
-    <div class="ph"><span class="pt">🛢 Commodities</span><span class="pb">GOLD-API + ETFs</span></div>
+    <div class="ph"><span class="pt">🛢 Commodities</span><span class="pb">CORE SET</span></div>
     <div id="comms"><div class="ar"><div class="ldph" style="width:100%"></div></div></div>
   </div>
 
@@ -281,44 +285,111 @@ let allNews = [];
 let tkBuf = [];
 
 const STOCKS = [
-  ['SPY','S&P 500 ETF'], ['QQQ','Nasdaq 100 ETF'], ['DIA','Dow ETF'],
-  ['IWM','Russell 2000 ETF'], ['AAPL','Apple'], ['MSFT','Microsoft']
-];
-
-const COMMODITY_ETFS = [
-  ['GLD','Gold ETF','XAU'], ['SLV','Silver ETF','XAG'], ['USO','Oil ETF',null],
-  ['CPER','Copper ETF','HG'], ['PPLT','Platinum ETF','XPT'], ['PALL','Palladium ETF','XPD']
+  ['SPY','S&P 500 ETF'],
+  ['QQQ','Nasdaq 100 ETF'],
+  ['DIA','Dow ETF'],
+  ['IWM','Russell 2000 ETF'],
+  ['AAPL','Apple'],
+  ['MSFT','Microsoft']
 ];
 
 const BONDS = [
-  ['TLT','20Y Treasury'], ['IEF','7-10Y Treasury'],
-  ['LQD','Inv Grade Corp'], ['HYG','High Yield']
+  ['TLT','20Y Treasury'],
+  ['IEF','7-10Y Treasury'],
+  ['LQD','Inv Grade Corp'],
+  ['HYG','High Yield']
 ];
 
 const FUTURES = [
-  ['ES=F','S&P 500 Fut'], ['NQ=F','Nasdaq Fut'], ['YM=F','Dow Fut'],
-  ['CL=F','WTI Crude'], ['GC=F','Gold Fut'], ['^VIX','VIX']
+  ['ES=F','S&P 500 Fut'],
+  ['NQ=F','Nasdaq Fut'],
+  ['YM=F','Dow Fut'],
+  ['CL=F','WTI Crude'],
+  ['GC=F','Gold Fut'],
+  ['^VIX','VIX']
 ];
 
 const SECTORS = [
-  ['XLK','Tech'], ['XLF','Financials'], ['XLV','Health Care'], ['XLE','Energy'], ['XLY','Consumer Disc'],
-  ['XLP','Consumer Staples'], ['XLI','Industrials'], ['XLB','Materials'], ['XLU','Utilities'], ['XLRE','Real Estate']
+  ['XLK','Tech'],
+  ['XLF','Financials'],
+  ['XLV','Health Care'],
+  ['XLE','Energy'],
+  ['XLY','Consumer Disc'],
+  ['XLP','Consumer Staples'],
+  ['XLI','Industrials'],
+  ['XLB','Materials'],
+  ['XLU','Utilities'],
+  ['XLRE','Real Estate']
+];
+
+const COMMODITIES = [
+  {
+    family:'Precious Metals',
+    items:[
+      { name:'Gold', sym:'XAU/USD', kind:'goldapi', key:'XAU', prefix:'$' },
+      { name:'Silver', sym:'XAG/USD', kind:'goldapi', key:'XAG', prefix:'$' }
+    ]
+  },
+  {
+    family:'Industrial Metals',
+    items:[
+      { name:'Copper', sym:'XCU/USD', kind:'goldapi', key:'HG', prefix:'$' }
+    ]
+  },
+  {
+    family:'Energy',
+    items:[
+      { name:'WTI Crude', sym:'CL=F', kind:'finnhub', key:'CL=F', prefix:'$' },
+      { name:'Brent Crude', sym:'BZ=F', kind:'finnhub', key:'BZ=F', prefix:'$' },
+      { name:'Gasoline', sym:'RB=F', kind:'finnhub', key:'RB=F', prefix:'$' },
+      { name:'Diesel / Gasoil', sym:'HO=F', kind:'finnhub', key:'HO=F', prefix:'$' },
+      { name:'TTF Netherlands', sym:'TTF=F', kind:'finnhub', key:'TTF=F', prefix:'€' },
+      { name:'Henry Hub Gas', sym:'NG=F', kind:'finnhub', key:'NG=F', prefix:'$' },
+      { name:'Coal', sym:'KOL', kind:'finnhub', key:'KOL', prefix:'$' },
+      { name:'Uranium', sym:'URA', kind:'finnhub', key:'URA', prefix:'$' }
+    ]
+  },
+  {
+    family:'Agriculture',
+    items:[
+      { name:'Corn', sym:'ZC=F', kind:'finnhub', key:'ZC=F', prefix:'$' },
+      { name:'Wheat', sym:'ZW=F', kind:'finnhub', key:'ZW=F', prefix:'$' },
+      { name:'Soybeans', sym:'ZS=F', kind:'finnhub', key:'ZS=F', prefix:'$' },
+      { name:'Coffee', sym:'KC=F', kind:'finnhub', key:'KC=F', prefix:'$' },
+      { name:'Cocoa', sym:'CC=F', kind:'finnhub', key:'CC=F', prefix:'$' },
+      { name:'Sugar', sym:'SB=F', kind:'finnhub', key:'SB=F', prefix:'$' }
+    ]
+  },
+  {
+    family:'Industry',
+    items:[
+      { name:'Lumber', sym:'LBS=F', kind:'finnhub', key:'LBS=F', prefix:'$' }
+    ]
+  }
+];
+
+const COMMODITY_FINNHUB_SYMBOLS = [
+  ...new Set(
+    COMMODITIES.flatMap(group =>
+      group.items.filter(x => x.kind === 'finnhub').map(x => x.key)
+    )
+  )
 ];
 
 const NEWS_KEYWORDS = {
-  markets: ['market','stocks','equities','shares','wall street','nasdaq','dow','s&p','bond','yield','trading','investor','futures','treasury'],
-  economics: ['inflation','cpi','jobs','gdp','economy','economic','fed','ecb','rates','rate hike','unemployment','consumer confidence'],
-  politics: ['trump','biden','white house','congress','senate','election','government','minister','president','policy','tariff','geopolitics'],
-  technology: ['ai','artificial intelligence','nvidia','chip','chips','apple','microsoft','google','meta','amazon','tesla','software','semiconductor'],
-  wealth: ['wealth','millionaire','billionaire','private bank','family office','luxury','rich','inheritance'],
-  business: ['merger','acquisition','earnings','ceo','company','corporate','deal','ipo','revenue','profit','business'],
-  green: ['climate','green','renewable','solar','wind','emissions','esg','battery','energy transition'],
-  opinion: ['opinion','commentary','analysis','column','view'],
-  industries: ['insurance','banking','retail','airline','autos','pharma','real estate','manufacturing','industrial']
+  markets:['market','stocks','equities','shares','wall street','nasdaq','dow','s&p','bond','yield','trading','investor','futures','treasury'],
+  economics:['inflation','cpi','jobs','gdp','economy','economic','fed','ecb','rates','rate hike','unemployment','consumer confidence'],
+  politics:['trump','biden','white house','congress','senate','election','government','minister','president','policy','tariff','geopolitics'],
+  technology:['ai','artificial intelligence','nvidia','chip','chips','apple','microsoft','google','meta','amazon','tesla','software','semiconductor'],
+  wealth:['wealth','millionaire','billionaire','private bank','family office','luxury','rich','inheritance'],
+  business:['merger','acquisition','earnings','ceo','company','corporate','deal','ipo','revenue','profit','business'],
+  green:['climate','green','renewable','solar','wind','emissions','esg','battery','energy transition'],
+  opinion:['opinion','commentary','analysis','column','view'],
+  industries:['insurance','banking','retail','airline','autos','pharma','real estate','manufacturing','industrial']
 };
 
 function loadApiKey(){
-  try { FINNHUB_KEY = localStorage.getItem('finnhub_key') || ''; } catch(e) {}
+  try{ FINNHUB_KEY = localStorage.getItem('finnhub_key') || ''; }catch(e){}
   if(FINNHUB_KEY){
     document.getElementById('apiKeyInput').value = FINNHUB_KEY;
     document.getElementById('apiStatus').textContent = '✓ SAVED';
@@ -330,7 +401,7 @@ function saveApiKey(){
   const k = document.getElementById('apiKeyInput').value.trim();
   if(!k) return;
   FINNHUB_KEY = k;
-  try { localStorage.setItem('finnhub_key', k); } catch(e) {}
+  try{ localStorage.setItem('finnhub_key', k); }catch(e){}
   document.getElementById('apiStatus').textContent = '✓ SAVED';
   document.getElementById('apiStatus').className = 'api-status api-ok';
   refreshAll();
@@ -341,17 +412,18 @@ const fmt = (v,d=2) => {
   const a = Math.abs(v);
   if(a >= 1e9) return (v/1e9).toFixed(2) + 'B';
   if(a >= 1e6) return (v/1e6).toFixed(2) + 'M';
-  if(a >= 1000) return Number(v).toLocaleString('en-US',{minimumFractionDigits:d, maximumFractionDigits:d});
+  if(a >= 1000) return Number(v).toLocaleString('en-US',{minimumFractionDigits:d,maximumFractionDigits:d});
   return Number(v).toFixed(d);
 };
 
 const ci = v => {
   if(v == null || isNaN(v)) return { t:'—', c:'nu' };
-  return { t:`${v >= 0 ? '+' : ''}${Number(v).toFixed(2)}%`, c: v >= 0 ? 'up' : 'dn' };
+  return { t:`${v >= 0 ? '+' : ''}${Number(v).toFixed(2)}%`, c:v >= 0 ? 'up' : 'dn' };
 };
 
 function sparkHTML(up){
-  let vals=[], v=50;
+  let vals = [];
+  let v = 50;
   for(let i=0;i<9;i++){
     v += ((Math.random() - (up ? 0.42 : 0.58)) * 10);
     v = Math.max(8, Math.min(92, v));
@@ -363,15 +435,17 @@ function sparkHTML(up){
 }
 
 function miniChart(up,w=160,h=32){
-  let pts=[], y=h/2, n=40;
+  let pts = [];
+  let y = h/2;
+  const n = 40;
   for(let i=0;i<n;i++){
     y += (Math.random() - (up ? 0.38 : 0.62)) * 3;
-    y = Math.max(3, Math.min(h-3, y));
+    y = Math.max(3, Math.min(h - 3, y));
     pts.push(`${(i/(n-1))*w},${y}`);
   }
   const mid = Math.floor(n*0.55);
   const col = up ? '#00e676' : '#ff3d57';
-  const p1 = pts.slice(0, mid+1).join(' ');
+  const p1 = pts.slice(0, mid + 1).join(' ');
   const p2 = pts.slice(mid).join(' ');
   return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="display:block;width:100%"><polyline points="${p1}" fill="none" stroke="rgba(200,220,234,.5)" stroke-width="1.5"/><polyline points="${p2}" fill="none" stroke="${col}" stroke-width="2"/></svg>`;
 }
@@ -401,7 +475,7 @@ function buildTicker(){
 async function finnhubQuote(sym){
   if(!FINNHUB_KEY) return null;
   try{
-    const r = await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(sym)}&token=${FINNHUB_KEY}`);
+    const r = await fetch(`https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(sym)}&token=${FINNHUB_KEY}`, {cache:'no-store'});
     if(!r.ok) return null;
     const j = await r.json();
     if(!j || j.c == null || j.c === 0) return null;
@@ -413,20 +487,23 @@ async function finnhubQuote(sym){
 
 async function fetchFinnhubBatch(symbols){
   const res = {};
+  if(!FINNHUB_KEY) return res;
+
   await Promise.all(symbols.map((sym,i) =>
     new Promise(resolve => setTimeout(async () => {
       const d = await finnhubQuote(sym);
       if(d && d.c > 0){
         res[sym] = {
-          price: d.c,
-          chg: d.dp != null ? d.dp : (d.pc > 0 ? ((d.c-d.pc)/d.pc)*100 : 0),
-          change: d.d || 0,
-          prevClose: d.pc
+          price:d.c,
+          chg:d.dp != null ? d.dp : (d.pc > 0 ? ((d.c - d.pc) / d.pc) * 100 : 0),
+          change:d.d || 0,
+          prevClose:d.pc
         };
       }
       resolve();
-    }, i * 90))
+    }, i * 80))
   ));
+
   return res;
 }
 
@@ -435,10 +512,15 @@ async function fetchGoldApi(){
   const res = {};
   await Promise.all(syms.map(async sym => {
     try{
-      const r = await fetch(`https://api.gold-api.com/price/${sym}`);
+      const r = await fetch(`https://api.gold-api.com/price/${sym}`, {cache:'no-store'});
+      if(!r.ok) return;
       const j = await r.json();
       if(j && j.price > 0){
-        res[sym] = { price:j.price, chg:j.chp != null ? j.chp : 0, ch:j.ch || 0 };
+        res[sym] = {
+          price:j.price,
+          chg:j.chp != null ? j.chp : 0,
+          ch:j.ch || 0
+        };
       }
     }catch(e){}
   }));
@@ -447,7 +529,8 @@ async function fetchGoldApi(){
 
 async function fetchCrypto(){
   try{
-    const r = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,solana,ripple,cardano,dogecoin&order=market_cap_desc&per_page=7&sparkline=false&price_change_percentage=24h');
+    const r = await fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=bitcoin,ethereum,binancecoin,solana,ripple,cardano,dogecoin&order=market_cap_desc&per_page=7&sparkline=false&price_change_percentage=24h', {cache:'no-store'});
+    if(!r.ok) return null;
     return await r.json();
   }catch(e){
     return null;
@@ -457,7 +540,8 @@ async function fetchCrypto(){
 async function fetchForex(){
   let rates = {};
   try{
-    const r = await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,JPY,CHF,AUD,CAD,CNY');
+    const r = await fetch('https://api.frankfurter.app/latest?from=USD&to=EUR,GBP,JPY,CHF,AUD,CAD,CNY', {cache:'no-store'});
+    if(!r.ok) return {};
     const j = await r.json();
     rates = j.rates || {};
   }catch(e){}
@@ -466,7 +550,8 @@ async function fetchForex(){
 
 async function fetchFG(){
   try{
-    const r = await fetch('https://api.alternative.me/fng/?limit=1');
+    const r = await fetch('https://api.alternative.me/fng/?limit=1', {cache:'no-store'});
+    if(!r.ok) return null;
     const j = await r.json();
     if(j?.data?.[0]){
       return {
@@ -483,7 +568,7 @@ async function fetchFG(){
 async function fetchNews(){
   if(!FINNHUB_KEY) return [];
   try{
-    const r = await fetch(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`);
+    const r = await fetch(`https://finnhub.io/api/v1/news?category=general&token=${FINNHUB_KEY}`, {cache:'no-store'});
     if(!r.ok) return [];
     const j = await r.json();
     return Array.isArray(j) ? j : [];
@@ -498,7 +583,12 @@ function renderAssetRows(targetId, rows){
     el.innerHTML = `<div class="err-msg">No data available</div>`;
     return;
   }
+
   el.innerHTML = rows.map(r => {
+    if(r.familyHeader){
+      return `<div class="afh">${r.familyHeader}</div>`;
+    }
+
     const c = ci(r.chg);
     return `
       <div class="ar">
@@ -516,29 +606,41 @@ function renderAssetRows(targetId, rows){
 
 function renderStocks(data){
   const rows = STOCKS.map(([sym,name]) => ({
-    sym, name,
-    price: data[sym]?.price ? '$' + fmt(data[sym].price,2) : '—',
-    chg: data[sym]?.chg ?? null
+    sym,
+    name,
+    price:data[sym]?.price ? '$' + fmt(data[sym].price,2) : '—',
+    chg:data[sym]?.chg ?? null
   }));
   renderAssetRows('stocks', rows);
 }
 
-function renderCommodities(goldData, etfData){
+function renderCommodities(goldData, finnhubData){
   document.getElementById('goldSpot').textContent = goldData.XAU?.price ? '$' + fmt(goldData.XAU.price,2) : '—';
 
-  const rows = COMMODITY_ETFS.map(([sym,name,metalCode]) => {
-    let price = etfData[sym]?.price;
-    let chg = etfData[sym]?.chg;
-    if(metalCode && goldData[metalCode]){
-      price = goldData[metalCode].price;
-      chg = goldData[metalCode].chg;
-    }
-    return {
-      sym,
-      name,
-      price: price != null ? '$' + fmt(price,2) : '—',
-      chg: chg ?? null
-    };
+  const rows = [];
+
+  COMMODITIES.forEach(group => {
+    rows.push({ familyHeader: group.family });
+
+    group.items.forEach(item => {
+      let price = null;
+      let chg = null;
+
+      if(item.kind === 'goldapi'){
+        price = goldData[item.key]?.price ?? null;
+        chg = goldData[item.key]?.chg ?? null;
+      } else {
+        price = finnhubData[item.key]?.price ?? null;
+        chg = finnhubData[item.key]?.chg ?? null;
+      }
+
+      rows.push({
+        name:item.name,
+        sym:item.sym,
+        price:price != null ? `${item.prefix}${fmt(price,2)}` : '—',
+        chg
+      });
+    });
   });
 
   renderAssetRows('comms', rows);
@@ -550,24 +652,29 @@ function renderCrypto(data){
     return;
   }
   const rows = data.map(c => ({
-    sym: (c.symbol || '').toUpperCase(),
-    name: c.name || 'Crypto',
-    price: c.current_price != null ? '$' + fmt(c.current_price,2) : '—',
-    chg: c.price_change_percentage_24h ?? null
+    sym:(c.symbol || '').toUpperCase(),
+    name:c.name || 'Crypto',
+    price:c.current_price != null ? '$' + fmt(c.current_price,2) : '—',
+    chg:c.price_change_percentage_24h ?? null
   }));
   renderAssetRows('crypto', rows);
 }
 
 function renderForex(rates){
   const pairs = [
-    ['EUR','USD/EUR'], ['GBP','USD/GBP'], ['JPY','USD/JPY'], ['CHF','USD/CHF'],
-    ['AUD','USD/AUD'], ['CAD','USD/CAD'], ['CNY','USD/CNY']
+    ['EUR','USD/EUR'],
+    ['GBP','USD/GBP'],
+    ['JPY','USD/JPY'],
+    ['CHF','USD/CHF'],
+    ['AUD','USD/AUD'],
+    ['CAD','USD/CAD'],
+    ['CNY','USD/CNY']
   ];
   const rows = pairs.map(([code,name]) => ({
-    sym: code,
+    sym:code,
     name,
-    price: rates[code] != null ? fmt(rates[code],4) : '—',
-    chg: null
+    price:rates[code] != null ? fmt(rates[code],4) : '—',
+    chg:null
   }));
   renderAssetRows('forex', rows);
 }
@@ -635,7 +742,6 @@ function renderFearGreed(fg){
   document.getElementById('fgn').textContent = val;
   document.getElementById('fgl').textContent = label;
   document.getElementById('fgneedle').style.left = `calc(${val}% - 2px)`;
-
   const deg = -90 + (val/100) * 180;
   document.getElementById('ndl').style.transform = `rotate(${deg}deg)`;
 }
@@ -663,7 +769,7 @@ function renderNews(feed){
     return;
   }
 
-  const items = filteredNews(feed).slice(0, 20);
+  const items = filteredNews(feed).slice(0,20);
 
   if(!items.length){
     el.innerHTML = `<div class="news-feed-err">No articles found for this feed right now.</div>`;
@@ -691,7 +797,7 @@ function switchNewsFeed(feed, btn){
   renderNews(feed);
 }
 
-function updateTickerFromData(stockData, cryptoData, goldData, bondData){
+function updateTickerFromData(stockData, cryptoData, goldData, finnhubData){
   const arr = [];
 
   ['SPY','QQQ','DIA','IWM'].forEach(sym => {
@@ -701,13 +807,18 @@ function updateTickerFromData(stockData, cryptoData, goldData, bondData){
   });
 
   if(goldData.XAU) arr.push({ sym:'GOLD', price:'$' + fmt(goldData.XAU.price,2), chg:goldData.XAU.chg });
+  if(finnhubData['CL=F']) arr.push({ sym:'WTI', price:'$' + fmt(finnhubData['CL=F'].price,2), chg:finnhubData['CL=F'].chg });
+  if(finnhubData['BZ=F']) arr.push({ sym:'BRENT', price:'$' + fmt(finnhubData['BZ=F'].price,2), chg:finnhubData['BZ=F'].chg });
+  if(finnhubData['TTF=F']) arr.push({ sym:'TTF', price:'€' + fmt(finnhubData['TTF=F'].price,2), chg:finnhubData['TTF=F'].chg });
+
   if(Array.isArray(cryptoData)){
     const btc = cryptoData.find(x => x.id === 'bitcoin');
     const eth = cryptoData.find(x => x.id === 'ethereum');
     if(btc) arr.push({ sym:'BTC', price:'$' + fmt(btc.current_price,2), chg:btc.price_change_percentage_24h });
     if(eth) arr.push({ sym:'ETH', price:'$' + fmt(eth.current_price,2), chg:eth.price_change_percentage_24h });
   }
-  if(bondData.TLT) arr.push({ sym:'TLT', price:'$' + fmt(bondData.TLT.price,2), chg:bondData.TLT.chg });
+
+  if(stockData.TLT) arr.push({ sym:'TLT', price:'$' + fmt(stockData.TLT.price,2), chg:stockData.TLT.chg });
 
   tkBuf = arr;
   buildTicker();
@@ -719,16 +830,16 @@ async function refreshAll(){
   btn.disabled = true;
 
   try{
-    const stockSymbols = [...new Set([
+    const finnhubSymbols = [...new Set([
       ...STOCKS.map(x => x[0]),
-      ...COMMODITY_ETFS.map(x => x[0]),
       ...BONDS.map(x => x[0]),
       ...FUTURES.map(x => x[0]),
-      ...SECTORS.map(x => x[0])
+      ...SECTORS.map(x => x[0]),
+      ...COMMODITY_FINNHUB_SYMBOLS
     ])];
 
     const [finnhubData, goldData, cryptoData, forexData, fgData, newsData] = await Promise.all([
-      fetchFinnhubBatch(stockSymbols),
+      fetchFinnhubBatch(finnhubSymbols),
       fetchGoldApi(),
       fetchCrypto(),
       fetchForex(),
